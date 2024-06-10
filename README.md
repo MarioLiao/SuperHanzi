@@ -13,28 +13,29 @@ The proposal of our web application is to create a Japanese writing app, where n
     - https://wicg.github.io/handwriting-recognition/  
     - https://developers.google.com/ml-kit/vision/digital-ink-recognition   
     - https://kanjiapi.dev/  
-- OAuth 2.0
+- OAuth 2.0 for user auth/sign-in using social media accounts
 ### Additional Requirements
 #### Webhook 
-- Use Discord webhook to send messages to a discord channel
-    - Game session notification
-    - Game final winner with stats
-#### Real-time
+- Use stripe for payment and its webhook to notify our server
+    - Send a webhook to our server when a payment is successful
+    - Send a webhook to our server when a payment is unsuccessful
+    - etc
+
+#### Real-time Features
 - Users can compete with other users online to see who can write the characters of a sentence the fastest.
 - Use web sockets to establish a 2-way communication that way users can see the progress of their “opponent”.
-- For example: Opponent successfully writes a character → Sends HTTP request to notify server for completion → Server uses web sockets to notify other players/you that the opponent finished that particular character or won the game.
+- Characters are streamed in real time, and the opponent is notified immediately upon completion of each character.
 ### Alpha Milestones
 - Frontend/backend setup 
 - User auth setup with OAuth 2.0
-- Basic UI
+- Basic UI implementation
 - Start implementing 2-way communication using web sockets
 - Implement the Japanese alphabet (hiragana and katakana) and their images/stroke order images into our app
-- Research and implement how to be able to detect stroke order and handwriting
+- Research and implement stroke order and handwriting detection
 ### Beta Milestones
 - Deployment with public URL
-- Implementation of 2 way communication for real-time game mode
 - Combine the stroke order and handwriting detection with the Japanese alphabet (hiragana and katakana)
-- Feedback mechanism for character writing
+- Implement feedback mechanism for character writing
 ### Final Milestones
 - Full implementation of all features
     - Detailed feedback for stroke order, correctness, and starting position
