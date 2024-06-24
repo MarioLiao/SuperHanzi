@@ -1,29 +1,34 @@
-"use strict";
-
 import { readdirSync } from "fs";
 import { basename as _basename, join } from "path";
 import Sequelize, { DataTypes } from "sequelize";
 import { env as _env } from "process";
-const basename = _basename(__filename);
+import config from "../config/config.cjs";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const basename = _basename(import.meta.url);
 const env = _env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+const configDb = config[env];
 const db = {};
 
-const sequelize = new Sequelize(`${config.url}?sslmode=no-verify`, config);
+const sequelize = new Sequelize(configDb.url, config[env]);
 
-readdirSync(__dirname)
-  .filter((file) => {
-    return (
+(async () => {
+  for (const file of readdirSync(__dirname)) {
+    if (
       file.indexOf(".") !== 0 &&
       file !== basename &&
       file.slice(-3) === ".js" &&
       file.indexOf(".test.js") === -1
-    );
-  })
-  .forEach((file) => {
-    const model = require(join(__dirname, file))(sequelize, DataTypes);
-    db[model.name] = model;
-  });
+    ) {
+      const moduleUrl = new URL(file, import.meta.url);
+      const model = await import(moduleUrl);
+      db[model.default.name] = model.default(sequelize, DataTypes);
+    }
+  }
+})();
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
