@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomeComponent } from './home/home.component';
+import { Router } from '@angular/router';
+
 
 const MODULES = [
   CommonModule,
   RouterOutlet,
   LoginComponent,
   DashboardComponent,
+  HomeComponent,
+
 ];
 @Component({
   selector: 'app-root',
@@ -17,4 +22,20 @@ const MODULES = [
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(private router: Router) {}
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
+
+  navigateToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
+
+}
