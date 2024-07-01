@@ -1,0 +1,37 @@
+<div class="container">
+
+    <div class="col-6 section-one flex-column">
+        <div class="web-name">WEBAPPLOGO</div>
+
+        <div class="button-section flex-row">
+            <div class="toggle-container flex-row">
+                <div class="button-label">Show outline</div>
+
+                <input type="checkbox" [(ngModel)]="showOutline" (click)="showOutlineToggle()" id="showOutline" class="toggle-button" />
+                <label for="showOutline" class="toggle-label"></label>
+            </div>
+            <div class="toggle-container flex-row">
+                <div class="button-label">Hide Character</div>
+                <input type="checkbox" [(ngModel)]="hideCharacter" (click)="hideCharacterToggle()" id="pinyinOnly" class="toggle-button" />
+                <label for="pinyinOnly" class="toggle-label"></label>
+            </div>
+        </div>
+        <div class="character-section flex-column">
+            <div class="character">我</div>
+            <div class="pinyin">wŏ</div>
+        </div>
+        <div class="feedback-section">
+            <div class="feedback">insert feedback component here</div>
+        </div>
+    </div>
+    <div class="flex-column col-6 section-two">
+        <div class="home-button" (click)="navigateToHome()">Home</div>
+        <div class="whiteboard">
+            <div>insert angular component here</div>
+            <div class="hint-button">Hint</div>
+        </div>
+    </div>
+
+    <div class="pattern"></div>
+
+</div>

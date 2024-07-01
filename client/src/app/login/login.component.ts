@@ -20,6 +20,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   registerForm: FormGroup;
+  isLogin: boolean=true;
 
   constructor() {
     this.loginForm = this.fb.group({
@@ -56,5 +57,9 @@ export class LoginComponent {
         console.error('Passwords do not match');
       }
     }
+  }
+
+  toggleForm() {
+    this.isLogin = !this.isLogin;
   }
 }
