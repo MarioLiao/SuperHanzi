@@ -21,14 +21,18 @@
             <div class="pinyin">wŏ</div>
         </div>
         <div class="feedback-section">
-            <div class="feedback">insert feedback component here</div>
+            <div class="feedback" #learnInstructions></div>
         </div>
     </div>
     <div class="flex-column col-6 section-two">
         <div class="home-button" (click)="navigateToHome()">Home</div>
         <div class="whiteboard">
-            <div>insert angular component here</div>
-            <div class="hint-button">Hint</div>
+            <div id="learn-character" #learnCharacter></div>
+            <button #learnButton>Learn</button>
+            <button #learnDemonstration>Demonstration</button>
+            <button #learnQuizWithOutline>Practice Quiz#1</button>
+            <button #learnQuizWithoutOutline>Practice Quiz#2</button>
+            <div class="hint-button" #learnStrokeHint>Hint</div>
         </div>
     </div>
 
