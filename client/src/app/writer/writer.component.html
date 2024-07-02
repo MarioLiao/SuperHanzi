@@ -1,0 +1,60 @@
+<div class="container">
+
+    <div class="col-6 section-one flex-column">
+        <div class="web-name">WEBAPPLOGO</div>
+
+        <div class="button-section flex-row" *ngIf="practice">
+            <div class="toggle-container flex-row">
+                <div class="button-label">Show outline</div>
+                <input type="checkbox" [(ngModel)]="showOutline" (click)="showOutlineToggle()" id="showOutline" class="toggle-button" />
+                <label for="showOutline" class="toggle-label"></label>
+            </div>
+            <div class="toggle-container flex-row">
+                <div class="button-label">Hide Character</div>
+                <input type="checkbox" [(ngModel)]="hideCharacter" (click)="hideCharacterToggle()" id="pinyinOnly" class="toggle-button" />
+                <label for="pinyinOnly" class="toggle-label"></label>
+            </div>
+        </div>
+        <div class="character-section flex-column">
+            <div *ngIf="!hideCharacter" class="character">我</div>
+            <div class="pinyin">I / wŏ</div>
+        </div>
+        <div class="feedback-section">
+            <div class="feedback" *ngIf="learning">{{ learnInstructions }}</div>
+            <div class="feedback feedback-practice" *ngIf="practice">
+                <div class="practice-item">{{ practiceInstructions }}</div>
+                <div>
+                    <div class="practice-item">{{ feedbackCurrentStroke }}</div>
+                    <div class="practice-item">{{ feedbackStrokeMistakes }}</div>
+                    <div class="practice-item">{{ feedbackStrokesRemaining }}</div>
+                    <div class="practice-item">{{ feedbackTotalMistakes }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-column col-6 section-two">
+        <div class="home-button" (click)="navigateToHome()">Home</div>
+        <div class="whiteboard">
+            <div id="character-writer"></div>
+            <div *ngIf="learning">
+                <button class="general-button" *ngIf="!learnButtonHidden" (click)="learnCharacter()">Learn</button>
+                <button class="general-button" *ngIf="!learnDemonstrationHidden" (click)="demonstrateCharacter()">Demonstration</button>
+                <button class="general-button" *ngIf="!learnQuizWithOutlineHidden" (click)="quizWithOutline()">Practice Quiz#1</button>
+                <button class="general-button" *ngIf="!learnQuizWithoutOutlineHidden" (click)="quizWithoutOutline()">Practice Quiz#2</button>
+            </div>
+            <div *ngIf="practice">
+                <select class="general-button general-button-dropdown" *ngIf="!difficultyButtonHidden" [(ngModel)]="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+                <button class="general-button" *ngIf="!practiceButtonHidden" (click)="practiceCharacter()">Practice</button>
+                <button class="general-button" *ngIf="!practiceAgainButtonHidden" (click)="practiceCharacterAgain()">Practice Again</button>
+            </div>
+            <div class="hint-button" *ngIf="!strokeHintHidden" (click)="showStrokeHint()">Hint</div>
+        </div>
+    </div>
+
+    <div class="pattern"></div>
+
+</div>

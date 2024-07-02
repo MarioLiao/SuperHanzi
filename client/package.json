@@ -23,6 +23,7 @@
     "@angular/router": "^18.0.4",
     "@stripe/stripe-js": "^4.0.0",
     "angular-oauth2-oidc": "^17.0.1",
+    "hanzi-writer": "^3.7.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
