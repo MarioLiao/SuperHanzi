@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
     googleAuthIssuer : 'https://accounts.google.com',
-    googleClientId: '803206905011-slqfldvldm8amhp3qa4s16mjcvq0h8co.apps.googleusercontent.com',
-    googleClientSecret: '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',
+    googleClientId: '356667265386-lcl3t4kmc7eo5d1fpvj7r43fttvdgif8.apps.googleusercontent.com',
+    API_URL: 'http://localhost:3000/api',
   };

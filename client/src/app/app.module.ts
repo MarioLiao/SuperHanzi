@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 import { WriterComponent } from './writer/writer.component';
 
@@ -14,7 +13,6 @@ import { WriterComponent } from './writer/writer.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    DashboardComponent,
     HomeComponent,
     WriterComponent,
   ],
