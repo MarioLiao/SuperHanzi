@@ -4,15 +4,13 @@ frans.budiman@mail.utoronto.ca
 mario.liao@mail.utoronto.ca  
 pantysh.ghurburrun@mail.utoronto.ca 
 ### Description
-The proposal of our web application is to create a Japanese writing app, where new Japanese learners can learn how to write the Japanese alphabet (Hiragana and Katakana). Our app will be deployed via mobile, allowing the user to easily write with their fingers. When the user is practising or learning a Japanese character, our app will give the user feedback, to whether or not they have done the correct stroke order, the generally correct stroke, and the position of the start of the stroke. Along with users being able to “learn” and “review” Japanese characters, we will have an additional feature when users can play a game. This game will be a 1 vs 1 game, where the app will score the users based on their speed of writing and how correct their writing is.
+The proposal of our web application is to create a Chinese writing app, where new Chinese learners can learn how to write the Chinese characters. Our app will be deployed via mobile, allowing the user to easily write with their fingers. When the user is practising or learning a Chinese character, our app will give the user feedback, to whether or not they have done the correct stroke order, the generally correct stroke, and the position of the start of the stroke. Along with users being able to “learn” and “review” Chinese characters, we will have an additional feature when users can play a game. This game will be a 1 vs 1 game, where the app will score the users based on their speed of writing and how correct their writing is.
 ### Required Elements
 - Frontend: Angular  
 - Backend: Express  
 - Database: postgreSQL  
 - Third-party API:   
-    - https://wicg.github.io/handwriting-recognition/  
-    - https://developers.google.com/ml-kit/vision/digital-ink-recognition   
-    - https://kanjiapi.dev/  
+    - https://hanziwriter.org/docs.html
 - OAuth 2.0 for user auth/sign-in using social media accounts
 ### Additional Requirements
 #### Webhook 
@@ -30,11 +28,11 @@ The proposal of our web application is to create a Japanese writing app, where n
 - User auth setup with OAuth 2.0
 - Basic UI implementation
 - Start implementing 2-way communication using web sockets
-- Implement the Japanese alphabet (hiragana and katakana) and their images/stroke order images into our app
+- Implement the Chinese alphabet and their images/stroke order images into our app
 - Research and implement stroke order and handwriting detection
 ### Beta Milestones
 - Deployment with public URL
-- Combine the stroke order and handwriting detection with the Japanese alphabet (hiragana and katakana)
+- Combine the stroke order and handwriting detection with the Chinese alphabet
 - Implement feedback mechanism for character writing
 ### Final Milestones
 - Full implementation of all features
