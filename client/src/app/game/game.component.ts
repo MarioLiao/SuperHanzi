@@ -44,7 +44,6 @@ export class GameComponent implements OnInit, OnDestroy{
     showHintAfterMisses: number = 0;
 
     // Scoring for the game
-    player1Result: string = '';
     player1Score: number = 0;
     player1StrokesFinished: number = 0;
     player1MistakesMade: number = 0;
@@ -270,21 +269,16 @@ export class GameComponent implements OnInit, OnDestroy{
       this.player1Score = (this.player1StrokesFinished * 50) + (this.player1TimeFinished * 10) - (this.player1MistakesMade * 20);
       this.player2Score = (this.player2StrokesFinished * 50) + (this.player2TimeFinished * 10) - (this.player2MistakesMade * 20);
       if (this.player1StrokesFinished === this.characterStrokes && this.player2StrokesFinished < this.characterStrokes) {
-        this.player1Result = 'Victory'
         this.player2Result = 'Defeat'
       } else if (this.player2StrokesFinished === this.characterStrokes && this.player1StrokesFinished < this.characterStrokes) {
-        this.player1Result = 'Defeat'
         this.player2Result = 'Victory'
       }
       else {
         if (this.player1Score  === this.player2Score) {
-          this.player1Result = 'Tie'
           this.player2Result = 'Tie'
         } else if (this.player1Score  > this.player2Score) {
-          this.player1Result = 'Victory'
           this.player2Result = 'Defeat'
         } else {
-          this.player1Result = 'Defeat'
           this.player2Result = 'Victory'
         }
       }

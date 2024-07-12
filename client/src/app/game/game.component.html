@@ -6,9 +6,9 @@
             <div class="playerTitle" *ngIf="gameResultsHidden">Opponent</div>
             <div id="player1-writer" *ngIf="gameResultsHidden"></div>
             <div *ngIf="!gameResultsHidden">
-                <div class="gameResults gameResultsTitle">{{ player1Result }}</div>
+                <div class="gameResults gameResultsTitle">Opponent</div>
                 <div class="gameResults">Total Score: {{ player1Score }}</div>
-                <div class="gameResults">Time Remaining: {{ player1TimeFinished }} </div>
+                <div class="gameResults">Time Left: {{ player1TimeFinished }} secs</div>
                 <div class="gameResults">Strokes Finished: {{ player1StrokesFinished }}</div>
                 <div class="gameResults">Mistakes Made: {{ player1MistakesMade }}</div>
             </div>
@@ -30,7 +30,7 @@
             <div *ngIf="!gameResultsHidden">
                 <div class="gameResults gameResultsTitle">{{ player2Result }}</div>
                 <div class="gameResults">Total Score: {{ player2Score }}</div>
-                <div class="gameResults">Time Remaining: {{ player2TimeFinished }}</div>
+                <div class="gameResults">Time Left: {{ player2TimeFinished }} secs</div>
                 <div class="gameResults">Strokes Finished: {{ player2StrokesFinished }}</div>
                 <div class="gameResults">Mistakes Made: {{ player2MistakesMade }}</div>
             </div>
