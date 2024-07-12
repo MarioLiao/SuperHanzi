@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthGoogleService,
-    private socket: WebsocketService,
+    private socket: WebsocketService
   ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -59,7 +59,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/practice']);
   }
 
-
   findMatch() {
     console.log(this.userInfo);
 
@@ -69,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ]);
   }
 
-  navigateToGame() {
-    this.router.navigate(['/game']);
+  signOut() {
+    this.authService.logout();
   }
 }
