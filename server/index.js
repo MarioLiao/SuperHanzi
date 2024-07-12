@@ -6,6 +6,8 @@ import { sequelize } from "./db/models/index.js";
 import routes from "./routes/index.js";
 import morgan from "morgan";
 import cors from "cors";
+import http from "http";
+import { Server } from "socket.io";
 
 dotenv.config();
 
@@ -50,10 +52,66 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something broke!");
 });
 
+const server = http.createServer(app);
+//create http server
+
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+//create socket.io server
+
+let rooms = {}; //store rooms
+
+io.on("connection", (socket) => {
+  socket.on("findMatch", (data) => {
+    //data contain user info
+    let roomId;
+    //implement logic to find match
+    if (Object.keys(rooms).length === 0) {
+      rooms[data.userId] = [];
+      roomId = data.userId;
+      socket.join(roomId);
+      socket.emit("joinedRoom", { roomId: roomId });
+    } else {
+      roomId = Object.keys(rooms)[0];
+      delete rooms[roomId];
+      socket.join(roomId);
+      socket.emit("joinedRoom", { roomId: roomId });
+
+      io.to(roomId).emit("matchFound", { roomId: roomId });
+    }
+    console.log(`${data.userId} joined room: `, roomId);
+  });
+
+  socket.on("sendSignal", (data) => {
+    //data contain signal info (maybe how many words left)
+    console.log(data);
+    io.to(data.roomId).emit("signal", {userId: data.user, signal: data.signal });
+  });
+
+  socket.on("disconnect", () => {
+    //handle logic when a client disconnects
+  });
+
+  socket.on("leaveRoom", (data) => {
+    console.log("leaving");
+    socket.leave(data.roomId);
+    io.to(data.roomId).emit("destroyRoom", { roomId: data.roomId });
+    console.log(rooms);
+    console.log(data.roomId);
+
+    delete rooms[data.roomId];
+    console.log(rooms);
+  });
+}); //handle logic when a client connects to the web socket (when finding a match)
+
 const startServer = async () => {
   try {
     await sequelize.sync({ force: false });
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
   } catch (error) {

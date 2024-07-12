@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { AuthGoogleService } from '../auth/auth-google.service';
+import { WebsocketService } from '../websocket/websocket.service';
+import { Subscription } from 'rxjs';
 import { PaymentComponent } from '../components/payment/payment.component';
 
 @Component({
@@ -7,12 +10,46 @@ import { PaymentComponent } from '../components/payment/payment.component';
   standalone: true,
   imports: [PaymentComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
+  private userInfo: any;
+  //private gameRoom: any;
+  private routerSubscription: Subscription;
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router,
+    private authService: AuthGoogleService,
+    private socket: WebsocketService,
+  ) {
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (event.urlAfterRedirects !== '/game') {
+          //this.gameRoom = null;
+          console.log('erase room');
+        }
+      }
+    });
+  }
 
+  ngOnInit() {
+    this.socket.onSignal((data) => {
+      //listens for signal from server
+    });
+
+    this.socket.onDisconnect((data) => {
+      //listens for disconnect from server
+    });
+
+    this.userInfo = this.authService.getCurrentUser();
+    console.log(this.userInfo);
+
+    // store user info in variable
+  }
+
+  ngOnDestroy() {
+    this.routerSubscription.unsubscribe();
+  }
 
   navigateToLearning() {
     this.router.navigate(['/learning']);
@@ -21,6 +58,17 @@ export class HomeComponent {
   navigateToPractice() {
     this.router.navigate(['/practice']);
   }
+
+
+  findMatch() {
+    console.log(this.userInfo);
+
+    this.router.navigate([
+      '/game',
+      { userInfo: JSON.stringify(this.userInfo) },
+    ]);
+  }
+}
 
   navigateToGame() {
     this.router.navigate(['/game']);
