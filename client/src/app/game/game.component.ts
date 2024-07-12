@@ -24,6 +24,7 @@ export class GameComponent implements OnInit, OnDestroy{
     player1Writer!: HanziWriter;
     player2Writer!: HanziWriter;
     character: string = '我';
+    characterStrokes: number = 7;
 
     private gameRoom: any;
     private userInfo: any;
@@ -34,12 +35,25 @@ export class GameComponent implements OnInit, OnDestroy{
 
     // Default values for game page
     isGameStarted: boolean = false;
+    gameResultsHidden: boolean = true;
 
     // Values for the game
     timer: number = 30;
     difficulty: number = 1;
     showOutline: boolean = false;
     showHintAfterMisses: number = 0;
+
+    // Scoring for the game
+    player1Result: string = '';
+    player1Score: number = 0;
+    player1StrokesFinished: number = 0;
+    player1MistakesMade: number = 0;
+    player1TimeFinished: number = 0;
+    player2Result: string = '';
+    player2Score: number = 0;
+    player2StrokesFinished: number = 0;
+    player2MistakesMade: number = 0;
+    player2TimeFinished: number = 0;
 
     private opponentProgress: number = -1;
 
@@ -97,11 +111,22 @@ export class GameComponent implements OnInit, OnDestroy{
         if(data.userId !== this.userInfo.id) {
           if(data.signal === "complete character") {
             //handle when opponent completes the character
+            this.player1TimeFinished = this.timer;
+          } else if (data.signal === "character mistake") {
+            //handle when opponent misses a character
+            this.player1MistakesMade++;
           } else {
             this.opponentProgress = data.signal;
             this.cdr.detectChanges();
             this.createOpponentCharacter();
           }
+        }
+      });
+
+      this.socket.onStartGame((data)=>{
+        if(data.userId !== this.userInfo.id) {
+          this.setOptions(data);
+          this.startGame();
         }
       });
     }
@@ -116,27 +141,20 @@ export class GameComponent implements OnInit, OnDestroy{
     }
 
     startGame() {
-      this.isGameStarted = true;
-      this.setProperGameValues();
-      this.createCharacters();
-      this.createOpponentCharacter();
-      this.startTimer();
-      this.startQuiz();
+      if (!this.isGameStarted) {
+        this.isGameStarted = true;
+        this.setProperGameValues();
+        this.createCharacters();
+        //this.createOpponentCharacter();
+        this.socket.startGame({roomId: this.gameRoom, userId: this.userInfo.id, timer: this.timer, difficulty: this.difficulty, showOutline: this.showOutline, showHintAfterMisses: this.showHintAfterMisses});
+        this.startTimer();
+        this.startQuiz();
+      }
     }
 
     createCharacters() {
       // Create the characters using thrid party API HanziWriter
       if (this.showHintAfterMisses === 0) {
-        // this.player1Writer = HanziWriter.create('player1-writer', this.character, {
-        //   width: 500,
-        //   height: 500,
-        //   padding: 5,
-        //   showCharacter: false,
-        //   showOutline: this.showOutline,
-        //   showHintAfterMisses: false,
-        //   highlightOnComplete: false,
-        //   leniency: this.difficulty,
-        // });
         this.player2Writer = HanziWriter.create('player2-writer', this.character, {
           width: 500,
           height: 500,
@@ -148,16 +166,6 @@ export class GameComponent implements OnInit, OnDestroy{
           leniency: this.difficulty,
         });
       } else {
-        // this.player1Writer = HanziWriter.create('player1-writer', this.character, {
-        //   width: 500,
-        //   height: 500,
-        //   padding: 5,
-        //   showCharacter: false,
-        //   showOutline: this.showOutline,
-        //   showHintAfterMisses: this.showHintAfterMisses,
-        //   highlightOnComplete: false,
-        //   leniency: this.difficulty,
-        // });
         this.player2Writer = HanziWriter.create('player2-writer', this.character, {
           width: 500,
           height: 500,
@@ -170,20 +178,6 @@ export class GameComponent implements OnInit, OnDestroy{
         });
       }
 
-      this.player2Writer.quiz({
-        onComplete: (summaryData) => {
-          //send signal to room that player 2 has completed the quiz
-         this.socket.sendSignal({ roomId: this.gameRoom, signal:"complete character", user: this.userInfo.id});
-        },
-        onCorrectStroke: (data) => {
-          //send signal to room that player 2 has completed a stroke
-          this.socket.sendSignal({ roomId: this.gameRoom, signal: data.strokeNum, user: this.userInfo.id });
-        },
-        
-      });
-
-
-
     }
 
     createOpponentCharacter() {
@@ -192,14 +186,14 @@ export class GameComponent implements OnInit, OnDestroy{
         let order = this.opponentProgress + 1;
         let strokesPortion = charData.strokes.slice(0, order);
         this.renderFanningStrokes(target, strokesPortion);
-        
+        this.player1StrokesFinished++;
       });
     }
 
     renderFanningStrokes(target: any, strokes: any) {
       let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.style.width = '450';
-      svg.style.height = '450';
+      svg.style.width = '500';
+      svg.style.height = '500';
       svg.style.marginRight = '3px'
       while (target.firstChild) {
         target.removeChild(target.firstChild);
@@ -208,7 +202,7 @@ export class GameComponent implements OnInit, OnDestroy{
       let group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
     
       // set the transform property on the g element so the character renders at 75x75
-      let transformData = HanziWriter.getScalingTransform(450, 450);
+      let transformData = HanziWriter.getScalingTransform(500, 500);
       group.setAttributeNS(null, 'transform', transformData.transform);
       svg.appendChild(group);
     
@@ -216,7 +210,7 @@ export class GameComponent implements OnInit, OnDestroy{
         let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         path.setAttributeNS(null, 'd', strokePath);
         // style the character paths
-        path.style.fill = '#555';
+        path.style.fill = '#808080';
         group.appendChild(path);
       });
     }
@@ -226,15 +220,31 @@ export class GameComponent implements OnInit, OnDestroy{
     startTimer() {
       let timerInterval = setInterval( () => {
         this.timer--;
-        if (this.timer <= 0) {
+        if (this.timer <= 0 || (this.player1TimeFinished > 0 && this.player2TimeFinished > 0)) {
           clearInterval(timerInterval);
+          this.declareWinner();
         }
       }, 1000);
     }
 
     startQuiz() {
-      //this.player1Writer.quiz({});
-      this.player2Writer.quiz({});
+      this.player2Writer.quiz({
+        onMistake: () => {
+          this.player2MistakesMade++;
+          //send signal to room that player 2 has completed a stroke
+          this.socket.sendSignal({ roomId: this.gameRoom, signal: "character mistake", user: this.userInfo.id });
+        },
+        onCorrectStroke: (strokeData) => {
+          this.player2StrokesFinished++;
+          //send signal to room that player 2 has completed a stroke
+          this.socket.sendSignal({ roomId: this.gameRoom, signal: strokeData.strokeNum, user: this.userInfo.id });
+        },
+        onComplete: () => {
+          this.player2TimeFinished = this.timer;
+          //send signal to room that player 2 has completed the quiz
+          this.socket.sendSignal({ roomId: this.gameRoom, signal:"complete character", user: this.userInfo.id});
+        }
+      });
     }
 
     setProperGameValues() {
@@ -245,6 +255,38 @@ export class GameComponent implements OnInit, OnDestroy{
         this.showOutline = true;
       } else {
         this.showOutline = false;
+      }
+    }
+
+    setOptions(data: any) {
+      this.timer = data.timer;
+      this.showOutline = data.showOutline;
+      this.showHintAfterMisses = data.showHintAfterMisses;
+      this.difficulty = data.difficulty;
+    }
+
+    declareWinner() {
+      this.gameResultsHidden = false;
+      this.player1Score = (this.player1StrokesFinished * 50) + (this.player1TimeFinished * 10) - (this.player1MistakesMade * 20);
+      this.player2Score = (this.player2StrokesFinished * 50) + (this.player2TimeFinished * 10) - (this.player2MistakesMade * 20);
+      if (this.player1StrokesFinished === this.characterStrokes && this.player2StrokesFinished < this.characterStrokes) {
+        this.player1Result = 'Victory'
+        this.player2Result = 'Defeat'
+      } else if (this.player2StrokesFinished === this.characterStrokes && this.player1StrokesFinished < this.characterStrokes) {
+        this.player1Result = 'Defeat'
+        this.player2Result = 'Victory'
+      }
+      else {
+        if (this.player1Score  === this.player2Score) {
+          this.player1Result = 'Tie'
+          this.player2Result = 'Tie'
+        } else if (this.player1Score  > this.player2Score) {
+          this.player1Result = 'Victory'
+          this.player2Result = 'Defeat'
+        } else {
+          this.player1Result = 'Defeat'
+          this.player2Result = 'Victory'
+        }
       }
     }
 }

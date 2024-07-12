@@ -201,6 +201,15 @@ input:checked + .toggle-label::before{
     margin-bottom: 2%;
 }
 
+
+.gameResults{
+    font-size: 75px;
+    margin-top: 75px;
+    margin-bottom: 75px;
+    color: #deaf6e;
+    text-align: center;
+}
+
 .waiting-opponent{
     display: flex;
     justify-content: center;
@@ -211,4 +220,15 @@ input:checked + .toggle-label::before{
     color: white;
 }
 
+.gameResults.gameResultsTitle{
+    font-size: 100px;
+    color: #e48807;
+}
 
+.playerTitle{
+    font-size: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    color: black;
+    text-align: center;
+}
