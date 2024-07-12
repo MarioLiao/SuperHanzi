@@ -89,7 +89,10 @@ io.on("connection", (socket) => {
   socket.on("sendSignal", (data) => {
     //data contain signal info (maybe how many words left)
     console.log(data);
-    io.to(data.roomId).emit("signal", {userId: data.user, signal: data.signal });
+    io.to(data.roomId).emit("signal", {
+      userId: data.user,
+      signal: data.signal,
+    });
   });
 
   socket.on("disconnect", () => {

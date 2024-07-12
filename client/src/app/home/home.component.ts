@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { AuthGoogleService } from '../auth/auth-google.service';
+import { AuthGoogleService } from '../services/auth-google/auth-google.service';
 import { WebsocketService } from '../websocket/websocket.service';
 import { Subscription } from 'rxjs';
 import { PaymentComponent } from '../components/payment/payment.component';
@@ -68,7 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       { userInfo: JSON.stringify(this.userInfo) },
     ]);
   }
-}
 
   navigateToGame() {
     this.router.navigate(['/game']);
