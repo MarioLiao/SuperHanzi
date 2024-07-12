@@ -3,13 +3,27 @@
         <div class="web-name">WEBAPPLOGO</div>
         <div *ngIf="isGameStarted">Timer: {{ timer }} secs left</div>
         <div class="whiteboard">
-            <div id="player1-writer"></div>
+            <div id="player1-writer" *ngIf="gameResultsHidden"></div>
+            <div *ngIf="!gameResultsHidden">
+                <div class="gameResults gameResultsTitle">{{ player1Result }}</div>
+                <div class="gameResults">Total Score: {{ player1Score }}</div>
+                <div class="gameResults">Time Finished: {{ player1TimeFinished }}</div>
+                <div class="gameResults">Strokes Finished: {{ player1StrokesFinished }}</div>
+                <div class="gameResults">Mistakes Made: {{ player1MistakesMade }}</div>
+            </div>
         </div>
     </div>
     <div class="flex-column col-6 section-two">
         <div class="home-button" (click)="navigateToHome()">Home</div>
         <div class="whiteboard">
-            <div id="player2-writer"></div>
+            <div id="player2-writer" *ngIf="gameResultsHidden"></div>
+            <div *ngIf="!gameResultsHidden">
+                <div class="gameResults gameResultsTitle">{{ player2Result }}</div>
+                <div class="gameResults">Total Score: {{ player2Score }}</div>
+                <div class="gameResults">Time Finished: {{ player2TimeFinished }}</div>
+                <div class="gameResults">Strokes Finished: {{ player2StrokesFinished }}</div>
+                <div class="gameResults">Mistakes Made: {{ player2MistakesMade }}</div>
+            </div>
             <div *ngIf="!isGameStarted">
                 <select class="general-button general-button-dropdown" [(ngModel)]="timer">
                     <option value=30>30 secs</option>
