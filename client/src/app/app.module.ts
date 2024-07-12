@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { WriterComponent } from './writer/writer.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { WriterComponent } from './writer/writer.component';
     CommonModule,
     RouterModule,
     AppRoutingModule,
+    PaymentComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

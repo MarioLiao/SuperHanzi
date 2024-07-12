@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { AuthGoogleService } from '../auth/auth-google.service';
+import { AuthGoogleService } from '../services/auth-google/auth-google.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -95,7 +95,8 @@ export class LoginComponent {
           .subscribe({
             next: (response: any) => {
               console.log('Registration successful', response);
-              this.isLogin = true;
+              localStorage.setItem('token', response.token);
+              this.router.navigate(['/home']);
             },
             error: (error) => {
               // TODO: Handle errors
@@ -111,6 +112,8 @@ export class LoginComponent {
       }
     }
   }
+
+  // TODO: signout
 
   toggleForm() {
     this.isLogin = !this.isLogin;

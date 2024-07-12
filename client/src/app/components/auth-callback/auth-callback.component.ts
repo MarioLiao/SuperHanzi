@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthGoogleService } from '../auth-google.service';
+import { AuthGoogleService } from '../../services/auth-google/auth-google.service';
 import { Router } from '@angular/router';
 
 @Component({

@@ -5,6 +5,7 @@ export default (sequelize) => {
   class User extends Model {
     static associate(models) {
       // define associations here
+      User.hasMany(models.Payment, { foreignKey: "userId", as: "payments" });
     }
 
     async validatePassword(password) {
