@@ -21,5 +21,9 @@ export class HomeComponent {
     this.router.navigate(['/practice']);
   }
 
+  navigateToGame() {
+    this.router.navigate(['/game']);
+  }
+
 
 }
