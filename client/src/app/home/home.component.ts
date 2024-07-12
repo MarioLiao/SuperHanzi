@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { PaymentComponent } from '../components/payment/payment.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [PaymentComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -24,6 +25,4 @@ export class HomeComponent {
   navigateToGame() {
     this.router.navigate(['/game']);
   }
-
-
 }

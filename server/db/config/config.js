@@ -6,7 +6,7 @@ const config = {
   development: {
     url: process.env.DB_URL,
     dialect: "postgres",
-    logging: true,
+    logging: false,
   },
   test: {
     url: process.env.DB_URL,
