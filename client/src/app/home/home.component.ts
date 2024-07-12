@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       //listens for disconnect from server
     });
 
-    this.userInfo = this.authService.getCurrentUser();
+    this.userInfo = this.authService.getUserFromStorage();
     console.log(this.userInfo);
 
     // store user info in variable

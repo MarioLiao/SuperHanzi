@@ -28,7 +28,7 @@ export class AuthGoogleService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  private getUserFromStorage(): User | null {
+  public getUserFromStorage(): User | null {
     const token = localStorage.getItem('token');
     if (token) {
       const user = this.parseJwt(token);
