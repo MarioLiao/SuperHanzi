@@ -3,11 +3,12 @@
         <div class="web-name">WEBAPPLOGO</div>
         <div *ngIf="isGameStarted">Timer: {{ timer }} secs left</div>
         <div class="whiteboard">
+            <div class="playerTitle" *ngIf="gameResultsHidden">Opponent</div>
             <div id="player1-writer" *ngIf="gameResultsHidden"></div>
             <div *ngIf="!gameResultsHidden">
                 <div class="gameResults gameResultsTitle">{{ player1Result }}</div>
                 <div class="gameResults">Total Score: {{ player1Score }}</div>
-                <div class="gameResults">Time Finished: {{ player1TimeFinished }}</div>
+                <div class="gameResults">Time Remaining: {{ player1TimeFinished }} </div>
                 <div class="gameResults">Strokes Finished: {{ player1StrokesFinished }}</div>
                 <div class="gameResults">Mistakes Made: {{ player1MistakesMade }}</div>
             </div>
@@ -24,11 +25,12 @@
     <div class="flex-column col-6 section-two " *ngIf="matchFound">
         <div class="home-button" (click)="navigateToHome()">Home</div>
         <div class="whiteboard">
+            <div class="playerTitle" *ngIf="gameResultsHidden">You</div>
             <div id="player2-writer" *ngIf="gameResultsHidden"></div>
             <div *ngIf="!gameResultsHidden">
                 <div class="gameResults gameResultsTitle">{{ player2Result }}</div>
                 <div class="gameResults">Total Score: {{ player2Score }}</div>
-                <div class="gameResults">Time Finished: {{ player2TimeFinished }}</div>
+                <div class="gameResults">Time Remaining: {{ player2TimeFinished }}</div>
                 <div class="gameResults">Strokes Finished: {{ player2StrokesFinished }}</div>
                 <div class="gameResults">Mistakes Made: {{ player2MistakesMade }}</div>
             </div>

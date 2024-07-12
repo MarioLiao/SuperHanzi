@@ -99,6 +99,17 @@ io.on("connection", (socket) => {
     //handle logic when a client disconnects
   });
 
+  socket.on("startGame", (data) => {
+    //handle logic when a client starts game
+    io.to(data.roomId).emit("startGame", {
+      userId: data.userId,
+      timer: data.timer,
+      showOutline: data.showOutline,
+      difficulty: data.difficulty,
+      showHintAfterMisses: data.showHintAfterMisses,
+    });
+  });
+
   socket.on("leaveRoom", (data) => {
     console.log("leaving");
     socket.leave(data.roomId);

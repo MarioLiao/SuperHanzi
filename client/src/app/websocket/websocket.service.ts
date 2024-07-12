@@ -43,4 +43,12 @@ export class WebsocketService {
   public onDestroyRoom(callback: (data: any) => void) {
     this.webSocket.once('destroyRoom', callback);
   }
+
+  public onStartGame(callback: (data: any) => void) {
+    this.webSocket.once('startGame', callback);
+  }
+
+  public startGame(data: any) {
+    this.webSocket.emit("startGame", data);
+  }
 }
