@@ -144,7 +144,9 @@ export class WriterComponent {
     this.practiceInstructions = 'Practice Statistics:';
     this.feedbackCurrentStroke = 'Current Stroke #: 1';
     this.feedbackStrokeMistakes = 'Mistakes on Current Stroke: 0';
-    this.feedbackStrokesRemaining = 'Strokes Remaining: 7';
+    HanziWriter.loadCharacterData(this.character).then((charData: any) => {
+      this.feedbackStrokesRemaining = `Strokes Remaining: ${charData.strokes.length}`;
+    });
     this.feedbackTotalMistakes = 'Total Mistakes: 0';
     this.writer.quiz({
         onMistake: (strokeData) => {

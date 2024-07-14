@@ -24,7 +24,6 @@ export class GameComponent implements OnInit, OnDestroy{
     player1Writer!: HanziWriter;
     player2Writer!: HanziWriter;
     character: string = '我';
-    characterStrokes: number = 7;
 
     private gameRoom: any;
     private userInfo: any;
@@ -268,19 +267,12 @@ export class GameComponent implements OnInit, OnDestroy{
       this.gameResultsHidden = false;
       this.player1Score = (this.player1StrokesFinished * 50) + (this.player1TimeFinished * 10) - (this.player1MistakesMade * 20);
       this.player2Score = (this.player2StrokesFinished * 50) + (this.player2TimeFinished * 10) - (this.player2MistakesMade * 20);
-      if (this.player1StrokesFinished === this.characterStrokes && this.player2StrokesFinished < this.characterStrokes) {
+      if (this.player1Score  === this.player2Score) {
+        this.player2Result = 'Tie'
+      } else if (this.player1Score  > this.player2Score) {
         this.player2Result = 'Defeat'
-      } else if (this.player2StrokesFinished === this.characterStrokes && this.player1StrokesFinished < this.characterStrokes) {
+      } else {
         this.player2Result = 'Victory'
-      }
-      else {
-        if (this.player1Score  === this.player2Score) {
-          this.player2Result = 'Tie'
-        } else if (this.player1Score  > this.player2Score) {
-          this.player2Result = 'Defeat'
-        } else {
-          this.player2Result = 'Victory'
-        }
       }
     }
 }
