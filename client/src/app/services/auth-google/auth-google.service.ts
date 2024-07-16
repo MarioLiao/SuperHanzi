@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { EnvironmentService } from '../env/env.service';
 
 interface User {
   id: string;
@@ -17,6 +17,7 @@ interface User {
 export class AuthGoogleService {
   private router = inject(Router);
   private http = inject(HttpClient);
+  private envService = inject(EnvironmentService);
 
   private currentUserSubject: BehaviorSubject<User | null>;
   public currentUser: Observable<User | null>;
@@ -56,7 +57,8 @@ export class AuthGoogleService {
   }
 
   login() {
-    window.location.href = `${environment.API_URL}/auth/google`;
+    const apiUrl = this.envService.get('API_URL');
+    window.location.href = `${apiUrl}/auth/google`;
   }
 
   handleCallback(token: string) {

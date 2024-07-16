@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { firstValueFrom } from 'rxjs';
+import { EnvironmentService } from '../../services/env/env.service';
 
 declare let Stripe: any;
 
@@ -13,11 +13,13 @@ declare let Stripe: any;
 })
 export class PaymentComponent implements OnInit {
   private stripe: any;
+  private envService = inject(EnvironmentService);
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.stripe = Stripe(environment.STRIPE_PUBLISHABLE_KEY);
+    const stripeKey = this.envService.get('STRIPE_PUBLISHABLE_KEY');
+    this.stripe = Stripe(stripeKey);
   }
 
   async checkout() {
@@ -28,9 +30,10 @@ export class PaymentComponent implements OnInit {
       });
 
       // Create a checkout session on the server
+      const apiUrl = this.envService.get('API_URL');
       const response: any = await firstValueFrom(
         this.http.post(
-          `${environment.API_URL}/stripe/create-checkout-session`,
+          `${apiUrl}/stripe/create-checkout-session`,
           {
             amount: 2500,
             currency: 'cad',

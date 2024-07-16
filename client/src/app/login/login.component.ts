@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
-import { environment } from '../../environments/environment';
+import { EnvironmentService } from '../services/env/env.service';
 
 const MODULES: any[] = [
   CommonModule,
@@ -34,6 +34,7 @@ export class LoginComponent {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   private router = inject(Router);
+  private envService = inject(EnvironmentService);
 
   loginForm: FormGroup;
   registerForm: FormGroup;
@@ -64,8 +65,9 @@ export class LoginComponent {
       const { email, password } = this.loginForm.value;
       this.isLoading = true;
       this.loginError = null;
+      const apiUrl = this.envService.get('API_URL');
       this.http
-        .post(`${environment.API_URL}/login`, { email, password })
+        .post(`${apiUrl}/login`, { email, password })
         .subscribe({
           next: (response: any) => {
             console.log('Login successful', response);
@@ -90,8 +92,9 @@ export class LoginComponent {
       if (password === confirmPassword) {
         this.isLoading = true;
         this.registerError = null;
+        const apiUrl = this.envService.get('API_URL');
         this.http
-          .post(`${environment.API_URL}/signup`, { email, password })
+          .post(`${apiUrl}/signup`, { email, password })
           .subscribe({
             next: (response: any) => {
               console.log('Registration successful', response);
@@ -99,7 +102,6 @@ export class LoginComponent {
               this.router.navigate(['/home']);
             },
             error: (error) => {
-              // TODO: Handle errors
               console.error('Registration failed', error);
               this.registerError = 'Registration failed. Please try again.';
             },
@@ -112,8 +114,6 @@ export class LoginComponent {
       }
     }
   }
-
-  // TODO: signout
 
   toggleForm() {
     this.isLogin = !this.isLogin;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-
+import { EnvironmentService } from '../services/env/env.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +8,9 @@ import { io, Socket } from 'socket.io-client';
 export class WebsocketService {
   private webSocket: Socket;
 
-  constructor() {
-    this.webSocket = io(`ws://localhost:3000`);
+  constructor(private envService: EnvironmentService) {
+    const wsUrl = this.envService.get('WS_URL');
+    this.webSocket = io(`${wsUrl}`);
   }
 
   public findMatch(data: any) {
@@ -49,6 +50,6 @@ export class WebsocketService {
   }
 
   public startGame(data: any) {
-    this.webSocket.emit("startGame", data);
+    this.webSocket.emit('startGame', data);
   }
 }
