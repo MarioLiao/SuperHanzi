@@ -3,7 +3,7 @@
     height: 100%;
     background-color: #362e2a; /* Solid color for the content side */
     color: wheat;
-    font-size: 4vh;
+    font-size: 1.8vw;
     background-size: contain;
     width: 100%;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -61,18 +61,6 @@
     cursor: pointer;
 }
 
-.special-button{
-    background-color: #DFB06E;
-    padding-left: 2%;
-    padding-right: 2%;
-    padding-top: 1.5%;
-    padding-bottom: 1.5%;
-    border-radius: 50px;
-    border-bottom: #c98628 3px solid;
-    border-left: #d69d4d 3px solid;
-    color: black;
-    cursor: pointer;
-}
 
 .button:hover{
     color: #DFB06E;
@@ -80,10 +68,6 @@
     text-decoration-color: #DFB06E; 
 
 }
-
-
-
-
 
 .picture{
     height:100%;
