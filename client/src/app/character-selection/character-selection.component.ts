@@ -12,7 +12,6 @@ import { Character } from '../../classes/character';
   styleUrl: './character-selection.component.scss',
 })
 export class CharacterSelectionComponent {
-
   characters: Character[] = [];
   page: number = 0;
   limit: number = 28;
@@ -24,16 +23,22 @@ export class CharacterSelectionComponent {
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<{ length: number }>(`${this.apiUrl}/totalCharacters`, {}).subscribe((res) => {
-      this.totalPages = Math.ceil(res.length / this.limit);
-    });
+    this.http
+      .get<{ length: number }>(`${this.apiUrl}/totalCharacters`, {})
+      .subscribe((res) => {
+        this.totalPages = Math.ceil(res.length / this.limit);
+      });
     this.getCharacters();
   }
 
   getCharacters() {
-    this.http.get<{ characters: Character[] }>(`${this.apiUrl}/characters/?page=${this.page}&limit=${this.limit}`, {}).subscribe((res) => {
-      this.characters = res.characters;
-    });
+    this.http
+      .get<{
+        characters: Character[];
+      }>(`${this.apiUrl}/characters/?page=${this.page}&limit=${this.limit}`, {})
+      .subscribe((res) => {
+        this.characters = res.characters;
+      });
   }
 
   nextPage() {
@@ -45,5 +50,4 @@ export class CharacterSelectionComponent {
     this.page--;
     this.getCharacters();
   }
-
 }
