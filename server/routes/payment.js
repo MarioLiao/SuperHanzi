@@ -1,36 +1,36 @@
-import express from "express";
-import Stripe from "stripe";
-import { authenticateToken } from "../middleware/auth.js";
-import { models } from "../db/models/index.js";
-import dotenv from "dotenv";
+import express from 'express';
+import Stripe from 'stripe';
+import { authenticateToken } from '../middleware/auth.js';
+import { models } from '../db/models/index.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
 const { Payment } = models;
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-04-10",
+  apiVersion: '2024-04-10',
 });
 
-router.post("/create-checkout-session", authenticateToken, async (req, res) => {
+router.post('/create-checkout-session', authenticateToken, async (req, res) => {
   try {
-    const { amount, currency = "cad" } = req.body;
+    const { amount, currency = 'cad' } = req.body;
     const userId = req.user.id;
 
     const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
+      payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
             currency: currency,
             product_data: {
-              name: "Premium+",
+              name: 'Premium+',
             },
             unit_amount: amount,
           },
           quantity: 1,
         },
       ],
-      mode: "payment",
+      mode: 'payment',
       // TODO: make success and cancel page in frontend
       success_url: `${process.env.FRONTEND_URL}/home`,
       cancel_url: `${process.env.FRONTEND_URL}/home`,
@@ -53,10 +53,10 @@ router.post("/create-checkout-session", authenticateToken, async (req, res) => {
 
 // Webhook handler
 router.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
+  '/webhook',
+  express.raw({ type: 'application/json' }),
   async (req, res) => {
-    const sig = req.headers["stripe-signature"];
+    const sig = req.headers['stripe-signature'];
     let event;
 
     try {
@@ -74,17 +74,17 @@ router.post(
     console.log(`Handling event type: ${event.type}`);
 
     switch (event.type) {
-      case "checkout.session.completed":
-        await updatePaymentStatus(data.id, "completed");
+      case 'checkout.session.completed':
+        await updatePaymentStatus(data.id, 'completed');
         break;
-      case "checkout.session.async_payment_succeeded":
-        await updatePaymentStatus(data.id, "succeeded");
+      case 'checkout.session.async_payment_succeeded':
+        await updatePaymentStatus(data.id, 'succeeded');
         break;
-      case "checkout.session.async_payment_failed":
-        await updatePaymentStatus(data.id, "failed");
+      case 'checkout.session.async_payment_failed':
+        await updatePaymentStatus(data.id, 'failed');
         break;
-      case "checkout.session.expired":
-        await updatePaymentStatus(data.id, "expired");
+      case 'checkout.session.expired':
+        await updatePaymentStatus(data.id, 'expired');
         break;
       default:
         console.log(`Unhandled event type ${event.type}`);
@@ -95,18 +95,18 @@ router.post(
 );
 
 // Get payment details
-router.get("/:paymentId", authenticateToken, async (req, res) => {
+router.get('/:paymentId', authenticateToken, async (req, res) => {
   try {
     const payment = await Payment.findOne({
       where: {
         id: req.params.paymentId,
         userId: req.user.id,
       },
-      attributes: ["paymentIntentId", "amount", "status", "receiptUrl"],
+      attributes: ['paymentIntentId', 'amount', 'status', 'receiptUrl'],
     });
 
     if (!payment) {
-      return res.status(404).json({ error: "Payment not found" });
+      return res.status(404).json({ error: 'Payment not found' });
     }
     res.json(payment);
   } catch (error) {
@@ -115,12 +115,12 @@ router.get("/:paymentId", authenticateToken, async (req, res) => {
 });
 
 // Get all payments for a user
-router.get("/", authenticateToken, async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   try {
     const payments = await Payment.findAll({
       where: { userId: req.user.id },
-      order: [["createdAt", "DESC"]],
-      attributes: ["id", "paymentIntentId", "amount", "status", "receiptUrl"],
+      order: [['createdAt', 'DESC']],
+      attributes: ['id', 'paymentIntentId', 'amount', 'status', 'receiptUrl'],
     });
     res.json(payments);
   } catch (error) {

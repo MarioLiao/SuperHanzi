@@ -1,10 +1,10 @@
-import { Model, DataTypes } from "sequelize";
+import { Model, DataTypes } from 'sequelize';
 
 export default (sequelize) => {
   class Payment extends Model {
     static associate(models) {
       // Define association here
-      Payment.belongsTo(models.User, { foreignKey: "userId", as: "user" });
+      Payment.belongsTo(models.User, { foreignKey: 'userId', as: 'user' });
     }
   }
 
@@ -32,14 +32,14 @@ export default (sequelize) => {
         type: DataTypes.UUID,
         allowNull: true, // TODO: Change to false
         references: {
-          model: "Users",
-          key: "id",
+          model: 'Users',
+          key: 'id',
         },
       },
     },
     {
       sequelize,
-      modelName: "Payment",
+      modelName: 'Payment',
     }
   );
 

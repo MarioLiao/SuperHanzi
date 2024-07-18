@@ -5,8 +5,6 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './character-selection.component.html',
-  styleUrl: './character-selection.component.scss'
+  styleUrl: './character-selection.component.scss',
 })
-export class CharacterSelectionComponent {
-
-}
+export class CharacterSelectionComponent {}

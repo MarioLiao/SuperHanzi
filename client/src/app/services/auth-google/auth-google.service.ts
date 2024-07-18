@@ -24,7 +24,7 @@ export class AuthGoogleService {
 
   constructor() {
     this.currentUserSubject = new BehaviorSubject<User | null>(
-      this.getUserFromStorage()
+      this.getUserFromStorage(),
     );
     this.currentUser = this.currentUserSubject.asObservable();
   }
@@ -48,7 +48,7 @@ export class AuthGoogleService {
           .map((c) => {
             return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
           })
-          .join('')
+          .join(''),
       );
       return JSON.parse(jsonPayload);
     } catch (e) {

@@ -5,14 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { Router } from '@angular/router';
 
-
-const MODULES = [
-  CommonModule,
-  RouterOutlet,
-  LoginComponent,
-  HomeComponent,
-
-];
+const MODULES = [CommonModule, RouterOutlet, LoginComponent, HomeComponent];
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -34,6 +27,4 @@ export class AppComponent {
   navigateToDashboard() {
     this.router.navigate(['/dashboard']);
   }
-
-
 }

@@ -1,15 +1,15 @@
-import express from "express";
-import jwt from "jsonwebtoken";
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { models } from "../db/models/index.js";
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import { models } from '../db/models/index.js';
 
 const { User } = models;
 const router = express.Router();
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "8h",
+    expiresIn: '8h',
   });
 };
 
@@ -18,7 +18,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "/api/auth/google/callback",
+      callbackURL: '/api/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -26,8 +26,8 @@ passport.use(
         if (!user) {
           user = await User.create({
             googleId: profile.id,
-            firstName: profile.displayName.split(" ")[0],
-            lastName: profile.displayName.split(" ")[1],
+            firstName: profile.displayName.split(' ')[0],
+            lastName: profile.displayName.split(' ')[1],
             email: profile.emails[0].value,
             isVerified: true,
           });
@@ -53,7 +53,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-router.post("/signup", async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.create({
@@ -73,12 +73,12 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user || !(await user.validatePassword(password))) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
     const token = generateToken(user);
     res.json({
@@ -96,19 +96,19 @@ router.post("/login", async (req, res) => {
 });
 
 router.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  '/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
 );
 
 router.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  '/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     const token = jwt.sign(
       { id: req.user.id, email: req.user.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "8h",
+        expiresIn: '8h',
       }
     );
     res.redirect(`${process.env.FRONTEND_URL}/oauth/callback?token=${token}`);

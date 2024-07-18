@@ -1,23 +1,21 @@
-.container{
-    display: flex;
-    height: 100%;
-    background-color: #362e2a; /* Solid color for the content side */
-    color: wheat;
-    font-size: 1.8vw;
-    background-size: contain;
-    width: 100%;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-
+.container {
+  display: flex;
+  height: 100%;
+  background-color: #362e2a; /* Solid color for the content side */
+  color: wheat;
+  font-size: 1.8vw;
+  background-size: contain;
+  width: 100%;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
-.top-section{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    height: fit-content;
+.top-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: fit-content;
 }
 
-.home-button{
-
+.home-button {
 }

@@ -1,32 +1,41 @@
 <div class="container">
   <div class="shadow">
-      <div class="wallpaper">
-          
-      </div>
+    <div class="wallpaper"></div>
   </div>
   <div class="solid">
-      <div class="web-name">WEBAPPLOGO</div>
-      <div class="login-container">
-        <div *ngIf="isLogin; else registerTemplate">
-
-          <div class="form-title">Sign-in</div>
-          <form class="login-form-container" [formGroup]="loginForm" (ngSubmit)="onLogin()">
-            <mat-form-field>
-              <mat-label>Email</mat-label>
-              <input matInput formControlName="email" type="email" />
-            </mat-form-field>
-            <mat-form-field>
-              <mat-label>Password</mat-label>
-              <input matInput formControlName="password" type="password" />
-            </mat-form-field>
-              <button class="form-button" color="primary" type="submit">Sign-in</button>
-              <div class="redirect" (click)="toggleForm()">Do not have an account? Sign-up</div>
-          </form>
+    <div class="web-name">WEBAPPLOGO</div>
+    <div class="login-container">
+      <div *ngIf="isLogin; else registerTemplate">
+        <div class="form-title">Sign-in</div>
+        <form
+          class="login-form-container"
+          [formGroup]="loginForm"
+          (ngSubmit)="onLogin()"
+        >
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" type="password" />
+          </mat-form-field>
+          <button class="form-button" color="primary" type="submit">
+            Sign-in
+          </button>
+          <div class="redirect" (click)="toggleForm()">
+            Do not have an account? Sign-up
+          </div>
+        </form>
       </div>
-      
+
       <ng-template #registerTemplate>
         <div class="form-title">Sign-up</div>
-        <form class="login-form-container" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <form
+          class="login-form-container"
+          [formGroup]="registerForm"
+          (ngSubmit)="onRegister()"
+        >
           <mat-form-field>
             <mat-label>Email</mat-label>
             <input matInput formControlName="email" type="email" />
@@ -39,24 +48,23 @@
             <mat-label>Confirm Password</mat-label>
             <input matInput formControlName="confirmPassword" type="password" />
           </mat-form-field>
-          <button class="form-button" color="primary" type="submit">Sign-up</button>
-          <div class="redirect" (click)="toggleForm()">Already have an account? Sign-in</div>
-
+          <button class="form-button" color="primary" type="submit">
+            Sign-up
+          </button>
+          <div class="redirect" (click)="toggleForm()">
+            Already have an account? Sign-in
+          </div>
         </form>
       </ng-template>
+    </div>
 
-      </div>
-
-      
-
-      <button id="google-login-button" mat-raised-button color="primary" (click)="signInWithGoogle()">Login with google</button>
-      
-
-      
-
+    <button
+      id="google-login-button"
+      mat-raised-button
+      color="primary"
+      (click)="signInWithGoogle()"
+    >
+      Login with google
+    </button>
   </div>
 </div>
-
-
-
-

@@ -66,23 +66,21 @@ export class LoginComponent {
       this.isLoading = true;
       this.loginError = null;
       const apiUrl = this.envService.get('API_URL');
-      this.http
-        .post(`${apiUrl}/login`, { email, password })
-        .subscribe({
-          next: (response: any) => {
-            console.log('Login successful', response);
-            localStorage.setItem('token', response.token);
-            this.router.navigate(['/home']);
-          },
-          error: (error) => {
-            console.error('Login failed', error);
-            this.loginError =
-              'Login failed. Please check your credentials and try again.';
-          },
-          complete: () => {
-            this.isLoading = false;
-          },
-        });
+      this.http.post(`${apiUrl}/login`, { email, password }).subscribe({
+        next: (response: any) => {
+          console.log('Login successful', response);
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/home']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+          this.loginError =
+            'Login failed. Please check your credentials and try again.';
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
     }
   }
 
@@ -93,22 +91,20 @@ export class LoginComponent {
         this.isLoading = true;
         this.registerError = null;
         const apiUrl = this.envService.get('API_URL');
-        this.http
-          .post(`${apiUrl}/signup`, { email, password })
-          .subscribe({
-            next: (response: any) => {
-              console.log('Registration successful', response);
-              localStorage.setItem('token', response.token);
-              this.router.navigate(['/home']);
-            },
-            error: (error) => {
-              console.error('Registration failed', error);
-              this.registerError = 'Registration failed. Please try again.';
-            },
-            complete: () => {
-              this.isLoading = false;
-            },
-          });
+        this.http.post(`${apiUrl}/signup`, { email, password }).subscribe({
+          next: (response: any) => {
+            console.log('Registration successful', response);
+            localStorage.setItem('token', response.token);
+            this.router.navigate(['/home']);
+          },
+          error: (error) => {
+            console.error('Registration failed', error);
+            this.registerError = 'Registration failed. Please try again.';
+          },
+          complete: () => {
+            this.isLoading = false;
+          },
+        });
       } else {
         this.registerError = 'Passwords do not match';
       }

@@ -1,11 +1,11 @@
-import { Model, DataTypes } from "sequelize";
-import bcrypt from "bcryptjs";
+import { Model, DataTypes } from 'sequelize';
+import bcrypt from 'bcryptjs';
 
 export default (sequelize) => {
   class User extends Model {
     static associate(models) {
       // define associations here
-      User.hasMany(models.Payment, { foreignKey: "userId", as: "payments" });
+      User.hasMany(models.Payment, { foreignKey: 'userId', as: 'payments' });
     }
 
     async validatePassword(password) {
@@ -52,7 +52,7 @@ export default (sequelize) => {
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
       hooks: {
         beforeCreate: async (user) => {
           if (user.password) {
@@ -61,7 +61,7 @@ export default (sequelize) => {
           }
         },
         beforeUpdate: async (user) => {
-          if (user.changed("password")) {
+          if (user.changed('password')) {
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(user.password, salt);
           }

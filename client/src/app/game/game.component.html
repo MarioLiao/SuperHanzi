@@ -1,66 +1,87 @@
-<div class="container" >
-    <div class="flex-column col-6 section-two" *ngIf="matchFound">
-        <div class="web-name">WEBAPPLOGO</div>
-        <div *ngIf="isGameStarted">Timer: {{ timer }} secs left</div>
-        <div class="whiteboard">
-            <div class="playerTitle" *ngIf="gameResultsHidden">Opponent</div>
-            <div id="player1-writer" *ngIf="gameResultsHidden"></div>
-            <div *ngIf="!gameResultsHidden">
-                <div class="gameResults gameResultsTitle">Opponent</div>
-                <div class="gameResults">Total Score: {{ player1Score }}</div>
-                <div class="gameResults">Time Left: {{ player1TimeFinished }} secs</div>
-                <div class="gameResults">Strokes Finished: {{ player1StrokesFinished }}</div>
-                <div class="gameResults">Mistakes Made: {{ player1MistakesMade }}</div>
-            </div>
+<div class="container">
+  <div class="flex-column col-6 section-two" *ngIf="matchFound">
+    <div class="web-name">WEBAPPLOGO</div>
+    <div *ngIf="isGameStarted">Timer: {{ timer }} secs left</div>
+    <div class="whiteboard">
+      <div class="playerTitle" *ngIf="gameResultsHidden">Opponent</div>
+      <div id="player1-writer" *ngIf="gameResultsHidden"></div>
+      <div *ngIf="!gameResultsHidden">
+        <div class="gameResults gameResultsTitle">Opponent</div>
+        <div class="gameResults">Total Score: {{ player1Score }}</div>
+        <div class="gameResults">Time Left: {{ player1TimeFinished }} secs</div>
+        <div class="gameResults">
+          Strokes Finished: {{ player1StrokesFinished }}
         </div>
+        <div class="gameResults">Mistakes Made: {{ player1MistakesMade }}</div>
+      </div>
     </div>
+  </div>
 
-    <div class="waiting-opponent" *ngIf="!matchFound && !showOpponent && !opponentQuit">Waiting for Opponent...</div>
-    <div class="waiting-opponent opponent-info" *ngIf="showOpponent">Found a Match</div>
-    <div class="waiting-opponent opponent-quit" *ngIf="opponentQuit">Opponent Forfeited</div>
+  <div
+    class="waiting-opponent"
+    *ngIf="!matchFound && !showOpponent && !opponentQuit"
+  >
+    Waiting for Opponent...
+  </div>
+  <div class="waiting-opponent opponent-info" *ngIf="showOpponent">
+    Found a Match
+  </div>
+  <div class="waiting-opponent opponent-quit" *ngIf="opponentQuit">
+    Opponent Forfeited
+  </div>
 
-
-
-
-    <div class="flex-column col-6 section-two " *ngIf="matchFound">
-        <div class="home-button" (click)="navigateToHome()">Home</div>
-        <div class="whiteboard">
-            <div class="playerTitle" *ngIf="gameResultsHidden">You</div>
-            <div id="player2-writer" *ngIf="gameResultsHidden"></div>
-            <div *ngIf="!gameResultsHidden">
-                <div class="gameResults gameResultsTitle">{{ player2Result }}</div>
-                <div class="gameResults">Total Score: {{ player2Score }}</div>
-                <div class="gameResults">Time Left: {{ player2TimeFinished }} secs</div>
-                <div class="gameResults">Strokes Finished: {{ player2StrokesFinished }}</div>
-                <div class="gameResults">Mistakes Made: {{ player2MistakesMade }}</div>
-            </div>
-            <div *ngIf="!isGameStarted">
-                <select class="general-button general-button-dropdown" [(ngModel)]="timer">
-                    <option value=30>30 secs</option>
-                    <option value=60>60 secs</option>
-                    <option value=90>90 secs</option>
-                    <option value=120>120 secs</option>
-                </select>
-                <select class="general-button general-button-dropdown" [(ngModel)]="showOutline">
-                    <option value=false>Hide Outline</option>
-                    <option value=true>Show Outline</option>
-                </select>
-                <select class="general-button general-button-dropdown" [(ngModel)]="showHintAfterMisses">
-                    <option value=0>Don't show hints</option>
-                    <option value=1>Show hint after 1 miss</option>
-                    <option value=2>Show hint after 2 miss</option>
-                    <option value=3>Show hint after 3 miss</option>
-                </select>
-                <select class="general-button general-button-dropdown" [(ngModel)]="difficulty">
-                    <option value=1>Easy</option>
-                    <option value=0.66>Medium</option>
-                    <option value=0.33>Hard</option>
-                </select>
-                <button class="general-button" (click)="startGame()">Start Game</button>
-            </div>
+  <div class="flex-column col-6 section-two" *ngIf="matchFound">
+    <div class="home-button" (click)="navigateToHome()">Home</div>
+    <div class="whiteboard">
+      <div class="playerTitle" *ngIf="gameResultsHidden">You</div>
+      <div id="player2-writer" *ngIf="gameResultsHidden"></div>
+      <div *ngIf="!gameResultsHidden">
+        <div class="gameResults gameResultsTitle">{{ player2Result }}</div>
+        <div class="gameResults">Total Score: {{ player2Score }}</div>
+        <div class="gameResults">Time Left: {{ player2TimeFinished }} secs</div>
+        <div class="gameResults">
+          Strokes Finished: {{ player2StrokesFinished }}
         </div>
+        <div class="gameResults">Mistakes Made: {{ player2MistakesMade }}</div>
+      </div>
+      <div *ngIf="!isGameStarted">
+        <select
+          class="general-button general-button-dropdown"
+          [(ngModel)]="timer"
+        >
+          <option value="30">30 secs</option>
+          <option value="60">60 secs</option>
+          <option value="90">90 secs</option>
+          <option value="120">120 secs</option>
+        </select>
+        <select
+          class="general-button general-button-dropdown"
+          [(ngModel)]="showOutline"
+        >
+          <option value="false">Hide Outline</option>
+          <option value="true">Show Outline</option>
+        </select>
+        <select
+          class="general-button general-button-dropdown"
+          [(ngModel)]="showHintAfterMisses"
+        >
+          <option value="0">Don't show hints</option>
+          <option value="1">Show hint after 1 miss</option>
+          <option value="2">Show hint after 2 miss</option>
+          <option value="3">Show hint after 3 miss</option>
+        </select>
+        <select
+          class="general-button general-button-dropdown"
+          [(ngModel)]="difficulty"
+        >
+          <option value="1">Easy</option>
+          <option value="0.66">Medium</option>
+          <option value="0.33">Hard</option>
+        </select>
+        <button class="general-button" (click)="startGame()">Start Game</button>
+      </div>
     </div>
+  </div>
 
-    <div class="pattern"></div>
-
+  <div class="pattern"></div>
 </div>

@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private authService: AuthGoogleService,
-    private socket: WebsocketService
+    private socket: WebsocketService,
   ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {

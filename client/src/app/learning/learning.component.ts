@@ -6,12 +6,10 @@ import { WriterComponent } from '../writer/writer.component';
   standalone: true,
   imports: [WriterComponent],
   templateUrl: './learning.component.html',
-  styleUrl: './learning.component.scss'
+  styleUrl: './learning.component.scss',
 })
 export class LearningComponent {
-
   constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 }

@@ -11,12 +11,7 @@ import { WriterComponent } from './writer/writer.component';
 import { PaymentComponent } from './components/payment/payment.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    WriterComponent,
-  ],
+  declarations: [AppComponent, LoginComponent, HomeComponent, WriterComponent],
   imports: [
     BrowserModule,
     CommonModule,
@@ -25,6 +20,6 @@ import { PaymentComponent } from './components/payment/payment.component';
     PaymentComponent,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,21 +1,21 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const config = {
   development: {
     url: process.env.DB_URL,
-    dialect: "postgres",
+    dialect: 'postgres',
     logging: false,
   },
   test: {
     url: process.env.DB_URL,
-    dialect: "postgres",
+    dialect: 'postgres',
     logging: false,
   },
   production: {
     url: process.env.DB_URL,
-    dialect: "postgres",
+    dialect: 'postgres',
     logging: false,
     dialectOptions: {
       ssl: {

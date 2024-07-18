@@ -9,7 +9,7 @@ declare let Stripe: any;
   selector: 'app-checkout',
   standalone: true,
   template: `<button (click)="checkout()">Upgrade to premium</button> `,
-  styleUrl: './payment.component.scss'
+  styleUrl: './payment.component.scss',
 })
 export class PaymentComponent implements OnInit {
   private stripe: any;
@@ -40,8 +40,8 @@ export class PaymentComponent implements OnInit {
           },
           {
             headers: headers,
-          }
-        )
+          },
+        ),
       );
 
       // Redirect to Stripe Checkout
