@@ -1,14 +1,14 @@
 import { Model, DataTypes } from "sequelize";
 
 export default (sequelize) => {
-    class Character extends Model{
+    class CharacterData extends Model{
         static associate(models){
             //Character.belongsToMany(models.User, { foreignKey: "userId", as: "user" });
             //implement for the characters that are already learned feature or something else
         }
     }
 
-    Character.init({
+    CharacterData.init({
         id:{
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -30,9 +30,9 @@ export default (sequelize) => {
     },
     {
         sequelize,
-        modelName: "Character",
+        modelName: "CharacterData",
     }
     );
-    return Character;
+    return CharacterData;
 }
 
