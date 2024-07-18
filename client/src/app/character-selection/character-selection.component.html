@@ -5,3 +5,11 @@
     <div class="home-button special-button">Home</div>
   </div>
 </div>
+<div *ngFor="let character of characters">
+    <div>{{ character.character }}</div>
+    <div>{{ character.pinyin }}</div>
+    <div>{{ character.english }}</div>
+</div>
+<button (click)="prevPage()" *ngIf="page !== 0">Previous Page</button>
+<div>Page: {{ page+1 }}/{{ totalPages }} </div>
+<button (click)="nextPage()" *ngIf="page !== (totalPages-1)">Next Page</button>
