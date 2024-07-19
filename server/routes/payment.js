@@ -5,7 +5,7 @@ import { models } from '../db/models/index.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const { Payment } = models;
+const { Payment, User } = models;
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2024-04-10',
@@ -76,6 +76,17 @@ router.post(
     switch (event.type) {
       case 'checkout.session.completed':
         await updatePaymentStatus(data.id, 'completed');
+        try {
+          const payment = await Payment.findOne({
+            where: { paymentId: data.id },
+          });
+          const user = await User.findOne({
+            where: { id: payment.userId },
+          });
+          user.update({ isPremium: true });
+        } catch (error) {
+          console.error('Error updating user premium status:', error);
+        }
         break;
       case 'checkout.session.async_payment_succeeded':
         await updatePaymentStatus(data.id, 'succeeded');
@@ -140,12 +151,6 @@ async function updatePaymentStatus(sessionId, status) {
         `Updated payment status to ${status} for Checkout Session ${sessionId}`
       );
     } else {
-      // TODO: should be removed in prod, /create-checkout-session should always create a payment record
-      // webhook event should be for updating the status of the payment record
-      const [created] = await Payment.upsert({
-        paymentId: sessionId,
-        status: status,
-      });
       if (created) {
         console.log(
           `Created payment record with status ${status} for Checkout Session ${sessionId}`

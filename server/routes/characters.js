@@ -6,22 +6,34 @@ const router = express.Router();
 
 // Get characters using offset pagination
 router.get('/characters', async (req, res) => {
-  const limit = req.query.limit;
-  const offset = req.query.page * limit;
-  const characters = await CharacterData.findAll({
-    offset,
-    limit,
-    attributes: ['id', 'character', 'pinyin', 'english'],
-  });
-  return res.json({ characters });
+  try {
+    const limit = parseInt(req.query.limit, 10);
+    let offset = parseInt(req.query.page, 10) * limit;
+
+    const characters = await CharacterData.findAll({
+      offset,
+      limit,
+      attributes: ['id', 'character', 'pinyin', 'english', 'isPremium'],
+      order: [['isPremium', 'DESC']],
+    });
+    return res.json({ characters });
+  } catch (error) {
+    console.error('Error fetching characters:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Get the amount of characters we have
 router.get('/totalCharacters', async (req, res) => {
-  const characters = await CharacterData.findAll({
-    attributes: ['id', 'character', 'pinyin', 'english'],
-  });
-  return res.json({ length: characters.length });
+  try {
+    const characters = await CharacterData.findAll({
+      attributes: ['id', 'character', 'pinyin', 'english', 'isPremium'],
+    });
+    return res.json({ length: characters.length });
+  } catch (error) {
+    console.error('Error fetching total characters:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 export default router;

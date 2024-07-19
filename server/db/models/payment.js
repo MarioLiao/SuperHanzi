@@ -30,7 +30,7 @@ export default (sequelize) => {
       },
       userId: {
         type: DataTypes.UUID,
-        allowNull: true, // TODO: Change to false
+        allowNull: false,
         references: {
           model: 'Users',
           key: 'id',

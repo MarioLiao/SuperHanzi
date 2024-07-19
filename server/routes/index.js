@@ -6,9 +6,9 @@ import characterRoutes from './characters.js';
 
 const router = express.Router();
 
-router.use('', authRoutes);
-router.use('', userRoutes);
+router.use('/', authRoutes);
+router.use('/', userRoutes);
 router.use('/stripe', paymentRoutes);
-router.use('', characterRoutes);
+router.use('/', characterRoutes);
 
 export default router;

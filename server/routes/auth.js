@@ -29,7 +29,6 @@ passport.use(
             firstName: profile.displayName.split(' ')[0],
             lastName: profile.displayName.split(' ')[1],
             email: profile.emails[0].value,
-            isVerified: true,
           });
         }
         done(null, user);
