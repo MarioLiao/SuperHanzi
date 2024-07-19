@@ -1,15 +1,47 @@
+<link
+  href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600..900&display=swap"
+  rel="stylesheet"
+/>
+
 <div class="container">
   <div class="top-section">
     <div class="web-name">WEBAPPLOGO</div>
-    <div class="page-title">Character Selection</div>
-    <div class="home-button special-button">Home</div>
+    <div>Page: {{ page + 1 }}/{{ totalPages }}</div>
+    <div class="special-button home-button" (click)="navigateToHome()">
+      Home
+    </div>
   </div>
+
+  <div class="bottom-section">
+    <div class="col-1 btn-container">
+      <div
+        class="prev-btn pointer"
+        (click)="prevPage()"
+        *ngIf="page !== 0"
+      ></div>
+    </div>
+
+    <div class="col-10 card-section">
+      <div class="card" *ngFor="let character of characters">
+        <div
+          class="card-shape pointer"
+          (click)="redirectFromSelection(character)"
+        >
+          <div class="chinese-text character">
+            {{ character.character }}
+          </div>
+          <div class="pinyin">{{ character.pinyin }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-1 btn-container">
+      <div
+        class="next-btn pointer"
+        (click)="nextPage()"
+        *ngIf="page !== totalPages - 1"
+      ></div>
+    </div>
+  </div>
+  <div class="pattern"></div>
 </div>
-<div *ngFor="let character of characters">
-  <div>{{ character.character }}</div>
-  <div>{{ character.pinyin }}</div>
-  <div>{{ character.english }}</div>
-</div>
-<button (click)="prevPage()" *ngIf="page !== 0">Previous Page</button>
-<div>Page: {{ page + 1 }}/{{ totalPages }}</div>
-<button (click)="nextPage()" *ngIf="page !== totalPages - 1">Next Page</button>

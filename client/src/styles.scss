@@ -32,8 +32,15 @@ body {
   padding-top: 1%;
   padding-bottom: 1%;
   border-radius: 50px;
-  border-bottom: #c98628 3px solid;
-  border-left: #d69d4d 3px solid;
+  border-bottom: #c98628 4px solid;
+  border-left: #d69d4d 4px solid;
+  border-top: #e9c798 2px solid;
   color: black;
   cursor: pointer;
+}
+
+.special-button:active {
+  border-left: #c98628 4px solid;
+  border-top: #d69d4d 2px solid;
+  transform: scale(0.95);
 }

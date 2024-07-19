@@ -1,5 +1,6 @@
 .container {
   display: flex;
+  flex-direction: column;
   height: 100%;
   background-color: #362e2a; /* Solid color for the content side */
   color: wheat;
@@ -15,7 +16,119 @@
   justify-content: space-between;
   width: 100%;
   height: fit-content;
+  padding-top: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  align-items: center;
+  z-index: 1;
+}
+
+.bottom-section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 .home-button {
+  height: min-content;
+  padding-top: 0.5%;
+  padding-bottom: 0.5%;
+}
+
+.prev-btn {
+  background-position: center;
+  width: 60%;
+  aspect-ratio: 1;
+  background-image: url("/assets/left-arrow.svg");
+  background-size: contain;
+}
+
+.next-btn {
+  background-position: center;
+  width: 60%;
+  aspect-ratio: 1;
+  background-image: url("/assets/right-arrow.svg");
+  background-size: contain;
+}
+
+.btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.pointer:active {
+  transform: scale(0.9);
+}
+
+.card-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12.5%, 1fr));
+  grid-auto-rows: 25%;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // width: 12.5%;
+  // height: 25%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.card-shape {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  background-color: #706258;
+  width: 90%;
+  height: 90%;
+  border-radius: 20%;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.5); /* Drop shadow effect */
+  color: rgb(219, 216, 211);
+}
+
+.chinese-text {
+  font-family: "Noto Serif SC", serif;
+  font-size: 5vw;
+  height: 30%;
+  text-shadow: #362e2a 2px 2px 2px;
+
+  align-self: end;
+}
+
+.pinyin {
+  font-size: 2vw;
+  padding-top: 25%;
+  margin-top: 5%;
+  justify-self: center;
+  text-shadow: #362e2a 2px 2px 2px;
+  color: #bbb6b2;
+}
+
+.pattern {
+  background-image: url("/assets/pattern.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  position: absolute;
+  width: 95%;
+  height: 100%;
+  z-index: 0;
 }

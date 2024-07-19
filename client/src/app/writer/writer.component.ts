@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import HanziWriter from 'hanzi-writer';
 
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { SelectionService } from '../services/selection-service/selection.service';
 
 @Component({
   selector: 'app-writer',
@@ -14,7 +16,10 @@ import { Router } from '@angular/router';
 })
 export class WriterComponent {
   writer!: HanziWriter;
-  character: string = '我';
+  character: any;
+  hanzi: string = '';
+  pinyin: string = '';
+  english: string = '';
   currentStroke: number = 0;
 
   @Input() showOutline!: boolean;
@@ -41,13 +46,22 @@ export class WriterComponent {
   @Input() feedbackStrokesRemaining: string = '';
   @Input() feedbackTotalMistakes: string = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private selectionService: SelectionService,
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.character = this.selectionService.getCharacter();
+    this.hanzi = this.character.character;
+    this.pinyin = this.character.pinyin;
+    this.english = this.character.english;
+  }
 
   createCharacter(leniency: number) {
     // Create the character using thrid party API HanziWriter
-    this.writer = HanziWriter.create('character-writer', this.character, {
+    this.writer = HanziWriter.create('character-writer', this.hanzi, {
       width: 500,
       height: 500,
       padding: 5,
@@ -56,6 +70,7 @@ export class WriterComponent {
       showHintAfterMisses: false,
       highlightOnComplete: false,
       leniency: leniency,
+      strokeAnimationSpeed: 2,
     });
   }
 
@@ -147,7 +162,7 @@ export class WriterComponent {
     this.practiceInstructions = 'Practice Statistics:';
     this.feedbackCurrentStroke = 'Current Stroke #: 1';
     this.feedbackStrokeMistakes = 'Mistakes on Current Stroke: 0';
-    HanziWriter.loadCharacterData(this.character).then((charData: any) => {
+    HanziWriter.loadCharacterData(this.hanzi).then((charData: any) => {
       this.feedbackStrokesRemaining = `Strokes Remaining: ${charData.strokes.length}`;
     });
     this.feedbackTotalMistakes = 'Total Mistakes: 0';
@@ -179,13 +194,13 @@ export class WriterComponent {
     let leniency = 1.0;
     switch (this.difficulty) {
       case 'easy':
-        leniency = 1.0;
+        leniency = 1.5;
         break;
       case 'medium':
-        leniency = 0.66;
+        leniency = 1.0;
         break;
       case 'hard':
-        leniency = 0.33;
+        leniency = 0.8;
         break;
     }
     return leniency;

@@ -1,10 +1,5 @@
 ## STRESSFULapi
 
-### URL
-
-website url: https://stressfulapi.re-v7.tech  
-video url:
-
 ### Team members
 
 frans.budiman@mail.utoronto.ca  

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { CommonModule } from '@angular/common';
 import { CharacterSelectionComponent } from './character-selection.component';
 
 describe('CharacterSelectionComponent', () => {

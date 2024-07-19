@@ -26,10 +26,12 @@
         <label for="pinyinOnly" class="toggle-label"></label>
       </div>
     </div>
+
     <div class="character-section flex-column">
-      <div *ngIf="!hideCharacter" class="character">我</div>
-      <div class="pinyin">I / wŏ</div>
+      <div *ngIf="!hideCharacter" class="character">{{ this.hanzi }}</div>
+      <div class="pinyin">{{ this.pinyin }} / {{ this.english }}</div>
     </div>
+
     <div class="feedback-section">
       <div class="feedback" *ngIf="learning">{{ learnInstructions }}</div>
       <div class="feedback feedback-practice" *ngIf="practice">
@@ -43,6 +45,7 @@
       </div>
     </div>
   </div>
+
   <div class="flex-column col-6 section-two">
     <div class="home-button" (click)="navigateToHome()">Home</div>
     <div class="whiteboard">

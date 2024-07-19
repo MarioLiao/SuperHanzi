@@ -17,7 +17,10 @@ export const routes: Routes = [
   { path: 'learning', component: LearningComponent },
   { path: 'practice', component: PracticeComponent },
   { path: 'game', component: GameComponent },
-  { path: 'character-selection', component: CharacterSelectionComponent },
+  {
+    path: 'character-selection/:destination',
+    component: CharacterSelectionComponent,
+  },
   { path: 'credits', component: CreditsComponent },
 ];
 

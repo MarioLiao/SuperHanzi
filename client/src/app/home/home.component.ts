@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
         if (event.urlAfterRedirects !== '/game') {
           //this.gameRoom = null;
-          console.log('erase room');
+          //console.log('erase room');
         }
       }
     });
@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.userInfo = this.authService.getUserFromStorage();
-    console.log(this.userInfo);
 
     // store user info in variable
   }
@@ -56,15 +55,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   navigateToLearning() {
-    this.router.navigate(['/learning']);
+    this.router.navigate(['/character-selection/learning']);
   }
 
   navigateToPractice() {
-    this.router.navigate(['/practice']);
+    this.router.navigate(['/character-selection/practice']);
   }
 
   findMatch() {
-    console.log(this.userInfo);
+    //console.log(this.userInfo);
 
     this.router.navigate([
       '/game',
