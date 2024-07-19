@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private router: Router,
     private authService: AuthGoogleService,
     private socket: WebsocketService,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -52,10 +52,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     // store user info in variable
     const apiUrl = this.envService.get('API_URL');
     this.http
-      .get<{ isUserPremium: boolean }>(`${apiUrl}/isUserPremium/${this.userInfo.id}`, {})
+      .get<{
+        isUserPremium: boolean;
+      }>(`${apiUrl}/isUserPremium/${this.userInfo.id}`, {})
       .subscribe((res) => {
         this.isUserPremium = res.isUserPremium;
-    });
+      });
   }
 
   ngOnDestroy() {

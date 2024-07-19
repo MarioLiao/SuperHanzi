@@ -83,9 +83,11 @@ export class CharacterSelectionComponent {
   getIsUserPremium() {
     const userInfo = this.authService.getUserFromStorage();
     this.http
-      .get<{ isUserPremium: boolean }>(`${this.apiUrl}/isUserPremium/${userInfo!.id}`, {})
+      .get<{
+        isUserPremium: boolean;
+      }>(`${this.apiUrl}/isUserPremium/${userInfo!.id}`, {})
       .subscribe((res) => {
         this.isUserPremium = res.isUserPremium;
-    });
+      });
   }
 }
