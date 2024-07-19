@@ -51,6 +51,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.routerSubscription.unsubscribe();
   }
 
+  navigateToCredits() {
+    this.router.navigate(['/credits']);
+  }
+
   navigateToLearning() {
     this.router.navigate(['/learning']);
   }

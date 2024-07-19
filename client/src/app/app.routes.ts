@@ -7,6 +7,7 @@ import { LearningComponent } from './learning/learning.component';
 import { PracticeComponent } from './practice/practice.component';
 import { GameComponent } from './game/game.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
+import { CreditsComponent } from './credits/credits.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'practice', component: PracticeComponent },
   { path: 'game', component: GameComponent },
   { path: 'character-selection', component: CharacterSelectionComponent },
+  { path: 'credits', component: CreditsComponent },
 ];
 
 @NgModule({
