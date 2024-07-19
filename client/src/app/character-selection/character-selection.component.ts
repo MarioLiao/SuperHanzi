@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { EnvironmentService } from '../services/env/env.service';
 import { Character } from '../../classes/character';
+import { AuthGoogleService } from '../services/auth-google/auth-google.service';
 
 @Component({
   selector: 'app-character-selection',
@@ -21,6 +22,7 @@ export class CharacterSelectionComponent {
   limit: number = 32;
   totalPages: number = 0;
   destination: any = '';
+  isUserPremium: boolean = false;
 
   constructor(
     private http: HttpClient,
@@ -28,6 +30,7 @@ export class CharacterSelectionComponent {
     private route: ActivatedRoute,
     private selectionService: SelectionService,
     private cdr: ChangeDetectorRef,
+    private authService: AuthGoogleService,
   ) {}
 
   ngOnInit() {
@@ -41,6 +44,7 @@ export class CharacterSelectionComponent {
         this.totalPages = Math.ceil(res.length / this.limit);
       });
     this.getCharacters();
+    this.getIsUserPremium();
   }
 
   redirectFromSelection(selectedCharacter: any) {
@@ -63,7 +67,6 @@ export class CharacterSelectionComponent {
       }>(`${this.apiUrl}/characters/?page=${this.page}&limit=${this.limit}`, {})
       .subscribe((res) => {
         this.characters = res.characters;
-        console.log(this.characters);
       });
   }
 
@@ -75,5 +78,14 @@ export class CharacterSelectionComponent {
   prevPage() {
     this.page--;
     this.getCharacters();
+  }
+
+  getIsUserPremium() {
+    const userInfo = this.authService.getUserFromStorage();
+    this.http
+      .get<{ isUserPremium: boolean }>(`${this.apiUrl}/isUserPremium/${userInfo!.id}`, {})
+      .subscribe((res) => {
+        this.isUserPremium = res.isUserPremium;
+    });
   }
 }

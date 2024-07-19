@@ -11,7 +11,7 @@
       <div class="button credits" (click)="navigateToCredits()">Credits</div>
       <div class="button learning" (click)="navigateToLearning()">Learning</div>
       <div class="button practice" (click)="navigateToPractice()">Practice</div>
-      <app-checkout></app-checkout>
+      <app-checkout *ngIf="!isUserPremium"></app-checkout>
       <div class="special-button profile" (click)="signOut()">Sign Out</div>
     </div>
     <div class="picture">

@@ -21,4 +21,14 @@ router.put('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+// Get if the user is a premium member or not
+router.get('/isUserPremium/:id', async (req, res) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    res.json({ isUserPremium: user.isPremium});
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 export default router;

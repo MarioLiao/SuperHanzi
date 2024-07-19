@@ -1,14 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthGoogleService } from '../services/auth-google/auth-google.service';
 import { WebsocketService } from '../websocket/websocket.service';
 import { Subscription } from 'rxjs';
 import { PaymentComponent } from '../components/payment/payment.component';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { EnvironmentService } from '../services/env/env.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PaymentComponent],
+  imports: [PaymentComponent, CommonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -17,10 +20,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   //private gameRoom: any;
   private routerSubscription: Subscription;
 
+  private envService = inject(EnvironmentService);
+  isUserPremium: boolean = false;
+
   constructor(
     private router: Router,
     private authService: AuthGoogleService,
     private socket: WebsocketService,
+    private http: HttpClient
   ) {
     this.routerSubscription = this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -42,8 +49,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     this.userInfo = this.authService.getUserFromStorage();
-
     // store user info in variable
+    const apiUrl = this.envService.get('API_URL');
+    this.http
+      .get<{ isUserPremium: boolean }>(`${apiUrl}/isUserPremium/${this.userInfo.id}`, {})
+      .subscribe((res) => {
+        this.isUserPremium = res.isUserPremium;
+    });
   }
 
   ngOnDestroy() {
