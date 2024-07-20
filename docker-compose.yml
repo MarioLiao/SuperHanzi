@@ -5,7 +5,7 @@ services:
       - "80:80"
       - "443:443"
     environment:
-      - production=true
+      - PRODUCTION=true
       - WS_URL=${WS_URL}
       - API_URL=${API_URL}
       - STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY}
