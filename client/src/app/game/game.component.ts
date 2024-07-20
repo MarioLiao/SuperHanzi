@@ -63,6 +63,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //setup socket event listeners
+    this.socket.openSocket();
 
     this.route.paramMap.subscribe((params) => {
       this.userInfo = params.get('userInfo');
@@ -75,6 +76,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
       this.gameRoom = data.roomId;
 
+      //To show brief message that opponent has been found
       setTimeout(() => {
         this.showOpponent = false;
         this.matchFound = true;
@@ -122,33 +124,36 @@ export class GameComponent implements OnInit, OnDestroy {
     this.socket.onStartGame((data) => {
       if (data.userId !== this.userInfo.id) {
         this.setOptions(data);
-        this.startGame();
+        this.startGame(false);
       }
     });
   }
 
   ngOnDestroy() {
     this.socket.leaveRoom({ roomId: this.gameRoom });
+    this.socket.closeSocket();
   }
 
   navigateToHome() {
     this.router.navigate(['/home']);
   }
 
-  startGame() {
+  startGame(shooter: boolean = true) {
     if (!this.isGameStarted) {
       this.isGameStarted = true;
       this.setProperGameValues();
       this.createCharacters();
       //this.createOpponentCharacter();
-      this.socket.startGame({
-        roomId: this.gameRoom,
-        userId: this.userInfo.id,
-        timer: this.timer,
-        difficulty: this.difficulty,
-        showOutline: this.showOutline,
-        showHintAfterMisses: this.showHintAfterMisses,
-      });
+      if (shooter) {
+        this.socket.startGame({
+          roomId: this.gameRoom,
+          userId: this.userInfo.id,
+          timer: this.timer,
+          difficulty: this.difficulty,
+          showOutline: this.showOutline,
+          showHintAfterMisses: this.showHintAfterMisses,
+        });
+      }
       this.startTimer();
       this.startQuiz();
     }
