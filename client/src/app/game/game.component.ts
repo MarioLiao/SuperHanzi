@@ -62,13 +62,11 @@ export class GameComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    const navData = window.history.state;
+    this.userInfo = navData.userInfo;
+
     //setup socket event listeners
     this.socket.openSocket();
-
-    this.route.paramMap.subscribe((params) => {
-      this.userInfo = params.get('userInfo');
-      this.userInfo = JSON.parse(this.userInfo);
-    });
 
     // triggered when user 2 joins the room
     this.socket.onMatchFound((data) => {
@@ -81,7 +79,7 @@ export class GameComponent implements OnInit, OnDestroy {
         this.showOpponent = false;
         this.matchFound = true;
         this.cdr.detectChanges();
-      }, 3000);
+      }, 2000);
     });
 
     // triggered when user 2 leaves the room
@@ -92,7 +90,7 @@ export class GameComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 2000);
+      }, 1000);
     });
 
     // emit signal to create room

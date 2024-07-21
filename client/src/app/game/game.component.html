@@ -23,6 +23,15 @@
   >
     Searching for Opponent...
   </div>
+
+  <div
+    class="home-button cancel-button"
+    *ngIf="!matchFound && !showOpponent && !opponentQuit"
+    (click)="navigateToHome()"
+  >
+    Cancel
+  </div>
+
   <div class="waiting-opponent opponent-info" *ngIf="showOpponent">
     Found a Match
   </div>
