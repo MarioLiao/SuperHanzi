@@ -30,6 +30,9 @@ export class GameComponent implements OnInit, OnDestroy {
   public matchFound: boolean = false;
   public showOpponent: boolean = false;
   public opponentQuit: boolean = false;
+  public timerBar: number = 100;
+  public strokeBar: number = 50;
+  public mistakeBar: number = 50;
 
   // Default values for game page
   isGameStarted: boolean = false;
@@ -37,6 +40,7 @@ export class GameComponent implements OnInit, OnDestroy {
 
   // Values for the game
   timer: number = 30;
+  setTimer: number = 30;
   difficulty: number = 1;
   showOutline: boolean = false;
   showHintAfterMisses: number = 0;
@@ -107,10 +111,14 @@ export class GameComponent implements OnInit, OnDestroy {
       if (data.userId !== this.userInfo.id) {
         if (data.signal === 'complete character') {
           //handle when opponent completes the character
-          this.player1TimeFinished = this.timer;
+          this.player1TimeFinished = data.time;
         } else if (data.signal === 'character mistake') {
           //handle when opponent misses a character
           this.player1MistakesMade++;
+          this.mistakeBar =
+            (this.player2MistakesMade /
+              (this.player1MistakesMade + this.player2MistakesMade)) *
+            100;
         } else {
           this.opponentProgress = data.signal;
           this.cdr.detectChanges();
@@ -152,7 +160,8 @@ export class GameComponent implements OnInit, OnDestroy {
           showHintAfterMisses: this.showHintAfterMisses,
         });
       }
-      this.startTimer();
+      this.setTimer = this.timer;
+      this.startTimer(); //REMOVE THE COMMENT TO START TIMER
       this.startQuiz();
     }
   }
@@ -199,13 +208,17 @@ export class GameComponent implements OnInit, OnDestroy {
       let strokesPortion = charData.strokes.slice(0, order);
       this.renderFanningStrokes(target, strokesPortion);
       this.player1StrokesFinished++;
+      this.strokeBar =
+        (this.player2StrokesFinished /
+          (this.player1StrokesFinished + this.player2StrokesFinished)) *
+        100;
     });
   }
 
   renderFanningStrokes(target: any, strokes: any) {
     let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.style.width = '500';
-    svg.style.height = '500';
+    svg.style.width = '200';
+    svg.style.height = '200';
     svg.style.marginRight = '3px';
     while (target.firstChild) {
       target.removeChild(target.firstChild);
@@ -213,8 +226,7 @@ export class GameComponent implements OnInit, OnDestroy {
     target.appendChild(svg);
     let group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
-    // set the transform property on the g element so the character renders at 75x75
-    let transformData = HanziWriter.getScalingTransform(500, 500);
+    let transformData = HanziWriter.getScalingTransform(200, 200);
     group.setAttributeNS(null, 'transform', transformData.transform);
     svg.appendChild(group);
 
@@ -230,6 +242,7 @@ export class GameComponent implements OnInit, OnDestroy {
   startTimer() {
     let timerInterval = setInterval(() => {
       this.timer--;
+      this.timerBar = (this.timer / this.setTimer) * 100;
       if (
         this.timer <= 0 ||
         (this.player1TimeFinished > 0 && this.player2TimeFinished > 0)
@@ -244,6 +257,10 @@ export class GameComponent implements OnInit, OnDestroy {
     this.player2Writer.quiz({
       onMistake: () => {
         this.player2MistakesMade++;
+        this.mistakeBar =
+          (this.player2MistakesMade /
+            (this.player1MistakesMade + this.player2MistakesMade)) *
+          100;
         //send signal to room that player 2 has completed a stroke
         this.socket.sendSignal({
           roomId: this.gameRoom,
@@ -253,6 +270,11 @@ export class GameComponent implements OnInit, OnDestroy {
       },
       onCorrectStroke: (strokeData) => {
         this.player2StrokesFinished++;
+        this.strokeBar =
+          (this.player2StrokesFinished /
+            (this.player1StrokesFinished + this.player2StrokesFinished)) *
+          100;
+
         //send signal to room that player 2 has completed a stroke
         this.socket.sendSignal({
           roomId: this.gameRoom,
@@ -267,6 +289,7 @@ export class GameComponent implements OnInit, OnDestroy {
           roomId: this.gameRoom,
           signal: 'complete character',
           user: this.userInfo.id,
+          time: this.timer,
         });
       },
     });

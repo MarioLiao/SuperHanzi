@@ -92,6 +92,7 @@ io.on('connection', (socket) => {
     io.to(data.roomId).emit('signal', {
       userId: data.user,
       signal: data.signal,
+      time: data.time,
     });
   });
 
