@@ -22,7 +22,7 @@ import HanziWriter from 'hanzi-writer';
 export class GameComponent implements OnInit, OnDestroy {
   player1Writer!: HanziWriter;
   player2Writer!: HanziWriter;
-  character: string = '我';
+  character: any;
 
   private gameRoom: any;
   private userInfo: any;
@@ -41,7 +41,7 @@ export class GameComponent implements OnInit, OnDestroy {
   // Values for the game
   timer: number = 30;
   setTimer: number = 30;
-  difficulty: number = 1;
+  difficulty: number = 1.5;
   showOutline: boolean = false;
   showHintAfterMisses: number = 0;
 
@@ -75,6 +75,7 @@ export class GameComponent implements OnInit, OnDestroy {
     // triggered when user 2 joins the room
     this.socket.onMatchFound((data) => {
       this.showOpponent = true;
+      this.character = data.character;
       this.cdr.detectChanges();
       this.gameRoom = data.roomId;
 
@@ -149,7 +150,6 @@ export class GameComponent implements OnInit, OnDestroy {
       this.isGameStarted = true;
       this.setProperGameValues();
       this.createCharacters();
-      //this.createOpponentCharacter();
       if (shooter) {
         this.socket.startGame({
           roomId: this.gameRoom,
@@ -171,7 +171,7 @@ export class GameComponent implements OnInit, OnDestroy {
     if (this.showHintAfterMisses === 0) {
       this.player2Writer = HanziWriter.create(
         'player2-writer',
-        this.character,
+        this.character.character,
         {
           width: 500,
           height: 500,
@@ -186,7 +186,7 @@ export class GameComponent implements OnInit, OnDestroy {
     } else {
       this.player2Writer = HanziWriter.create(
         'player2-writer',
-        this.character,
+        this.character.character,
         {
           width: 500,
           height: 500,
@@ -202,17 +202,19 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   createOpponentCharacter() {
-    HanziWriter.loadCharacterData(this.character).then((charData: any) => {
-      let target = document.getElementById('player1-writer');
-      let order = this.opponentProgress + 1;
-      let strokesPortion = charData.strokes.slice(0, order);
-      this.renderFanningStrokes(target, strokesPortion);
-      this.player1StrokesFinished++;
-      this.strokeBar =
-        (this.player2StrokesFinished /
-          (this.player1StrokesFinished + this.player2StrokesFinished)) *
-        100;
-    });
+    HanziWriter.loadCharacterData(this.character.character).then(
+      (charData: any) => {
+        let target = document.getElementById('player1-writer');
+        let order = this.opponentProgress + 1;
+        let strokesPortion = charData.strokes.slice(0, order);
+        this.renderFanningStrokes(target, strokesPortion);
+        this.player1StrokesFinished++;
+        this.strokeBar =
+          (this.player2StrokesFinished /
+            (this.player1StrokesFinished + this.player2StrokesFinished)) *
+          100;
+      },
+    );
   }
 
   renderFanningStrokes(target: any, strokes: any) {

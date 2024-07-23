@@ -8,11 +8,13 @@ import morgan from 'morgan';
 import cors from 'cors';
 import http from 'http';
 import { Server } from 'socket.io';
+import { models } from './db/models/index.js';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const { CharacterData } = models;
 
 // Stripe webhook middleware
 app.use((req, res, next) => {
@@ -66,7 +68,7 @@ const io = new Server(server, {
 let rooms = {}; //store rooms
 
 io.on('connection', (socket) => {
-  socket.on('findMatch', (data) => {
+  socket.on('findMatch', async (data) => {
     //data contain user info
     let roomId;
     //implement logic to find match
@@ -81,7 +83,14 @@ io.on('connection', (socket) => {
       socket.join(roomId);
       socket.emit('joinedRoom', { roomId: roomId });
 
-      io.to(roomId).emit('matchFound', { roomId: roomId });
+      const randomCharacter = await CharacterData.findOne({
+        order: sequelize.random(),
+      });
+
+      io.to(roomId).emit('matchFound', {
+        roomId: roomId,
+        character: randomCharacter,
+      });
     }
     console.log(`${data.userId} joined room: `, roomId);
   });

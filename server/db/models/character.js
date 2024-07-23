@@ -34,6 +34,7 @@ export default (sequelize) => {
     {
       sequelize,
       modelName: 'CharacterData',
+      timestamps: false,
     }
   );
   return CharacterData;
