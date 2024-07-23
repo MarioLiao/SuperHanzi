@@ -108,8 +108,16 @@
   opacity: 33%;
 }
 
+@font-face {
+  font-family: "KaiTi";
+  src: url("../../fonts/Kaiti.ttf")  format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 .chinese-text {
-  font-family: "Noto Serif SC", serif;
+  // font-family: "Noto Serif SC", serif;
+  font-family: "KaiTi", serif;
   font-size: 5vw;
   height: 30%;
   text-shadow: #362e2a 2px 2px 2px;

@@ -44,3 +44,14 @@ body {
   border-top: #d69d4d 2px solid;
   transform: scale(0.95);
 }
+
+@font-face {
+  font-family: "KaiTi";
+  src: url("./fonts/Kaiti.ttf")  format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.chinese{
+  font-family: "KaiTi", serif;
+}
