@@ -9,12 +9,14 @@ router.get('/characters', async (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.page, 10) * limit;
-
     const characters = await CharacterData.findAll({
       offset,
       limit,
       attributes: ['id', 'character', 'pinyin', 'english', 'isPremium'],
-      order: [['isPremium', 'DESC']],
+      order: [
+        ['isPremium', 'DESC'],
+        ['id', 'ASC'],
+      ],
     });
     return res.json({ characters });
   } catch (error) {
