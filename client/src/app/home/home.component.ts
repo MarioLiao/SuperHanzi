@@ -77,8 +77,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   findMatch() {
-    //console.log(this.userInfo);
-
     this.router.navigate(['/game'], { state: { userInfo: this.userInfo } });
   }
 

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
-import { Router } from '@angular/router';
+import { Router, ChildrenOutletContexts } from '@angular/router';
+import { animation1 } from './animation';
 
 const MODULES = [CommonModule, RouterOutlet, LoginComponent, HomeComponent];
 @Component({
@@ -12,9 +13,13 @@ const MODULES = [CommonModule, RouterOutlet, LoginComponent, HomeComponent];
   imports: [MODULES],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  animations: [animation1],
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private contexts: ChildrenOutletContexts,
+  ) {}
 
   navigateToLogin() {
     this.router.navigate(['/login']);
@@ -26,5 +31,12 @@ export class AppComponent {
 
   navigateToDashboard() {
     this.router.navigate(['/dashboard']);
+  }
+  prepareRoute(outlet: RouterOutlet) {
+    return (
+      outlet &&
+      outlet.activatedRouteData &&
+      outlet.activatedRouteData['animation']
+    );
   }
 }

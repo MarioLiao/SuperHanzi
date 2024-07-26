@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { WriterComponent } from './writer/writer.component';
 import { PaymentComponent } from './components/payment/payment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, LoginComponent, HomeComponent, WriterComponent],
@@ -18,6 +19,7 @@ import { PaymentComponent } from './components/payment/payment.component';
     RouterModule,
     AppRoutingModule,
     PaymentComponent,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
