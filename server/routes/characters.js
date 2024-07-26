@@ -1,11 +1,12 @@
 import express from 'express';
+import { authenticateToken } from '../middleware/auth.js';
 import { models } from '../db/models/index.js';
 
 const { CharacterData } = models;
 const router = express.Router();
 
 // Get characters using offset pagination
-router.get('/characters', async (req, res) => {
+router.get('/characters', authenticateToken, async (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10);
     let offset = parseInt(req.query.page, 10) * limit;
@@ -26,7 +27,7 @@ router.get('/characters', async (req, res) => {
 });
 
 // Get the amount of characters we have
-router.get('/totalCharacters', async (req, res) => {
+router.get('/totalCharacters', authenticateToken, async (req, res) => {
   try {
     const characters = await CharacterData.findAll({
       attributes: ['id', 'character', 'pinyin', 'english', 'isPremium'],
