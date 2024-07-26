@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionService } from '../services/selection-service/selection.service';
 
-import { Component, inject, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, ChangeDetectorRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EnvironmentService } from '../services/env/env.service';
 import { Character } from '../../classes/character';
 import { AuthGoogleService } from '../services/auth-google/auth-google.service';
@@ -16,13 +16,13 @@ import { AuthGoogleService } from '../services/auth-google/auth-google.service';
   templateUrl: './character-selection.component.html',
   styleUrl: './character-selection.component.scss',
 })
-export class CharacterSelectionComponent {
+export class CharacterSelectionComponent implements OnInit {
   characters: any = [];
-  page: number = 0;
-  limit: number = 32;
-  totalPages: number = 0;
+  page = 0;
+  limit = 32;
+  totalPages = 0;
   destination: any = '';
-  isUserPremium: boolean = false;
+  isUserPremium = false;
 
   constructor(
     private http: HttpClient,
@@ -36,10 +36,16 @@ export class CharacterSelectionComponent {
   ngOnInit() {
     //logic to decide where to redirect
     this.destination = this.route.snapshot.paramMap.get('destination');
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
 
     //find number of total pages
     this.http
-      .get<{ length: number }>(`${this.apiUrl}/totalCharacters`, {})
+      .get<{
+        length: number;
+      }>(`${this.apiUrl}/totalCharacters`, { headers: headers })
       .subscribe((res) => {
         this.totalPages = Math.ceil(res.length / this.limit);
       });
@@ -61,10 +67,16 @@ export class CharacterSelectionComponent {
   apiUrl = this.envService.get('API_URL');
 
   getCharacters() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
     this.http
       .get<{
         characters: Character[];
-      }>(`${this.apiUrl}/characters/?page=${this.page}&limit=${this.limit}`, {})
+      }>(`${this.apiUrl}/characters/?page=${this.page}&limit=${this.limit}`, {
+        headers: headers,
+      })
       .subscribe((res) => {
         this.characters = res.characters;
       });
