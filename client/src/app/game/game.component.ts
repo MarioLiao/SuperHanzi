@@ -66,7 +66,6 @@ export class GameComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('game component INIT');
     const navData = window.history.state;
     this.userInfo = navData.userInfo;
 
@@ -136,7 +135,6 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('destroying game');
     this.socket.leaveRoom({ roomId: this.gameRoom });
     this.socket.closeSocket();
   }
