@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private routerSubscription: Subscription;
 
   private envService = inject(EnvironmentService);
-  isUserPremium: boolean = false;
+  isUserPremium: boolean = true;
 
   constructor(
     private router: Router,

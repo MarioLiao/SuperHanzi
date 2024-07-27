@@ -32,8 +32,8 @@ router.post('/create-checkout-session', authenticateToken, async (req, res) => {
       ],
       mode: 'payment',
       // TODO: make success and cancel page in frontend
-      success_url: `${process.env.FRONTEND_URL}/home`,
-      cancel_url: `${process.env.FRONTEND_URL}/home`,
+      success_url: `${process.env.FRONTEND_URL}/after-payment/success`,
+      cancel_url: `${process.env.FRONTEND_URL}/after-payment/cancel`,
     });
 
     const payment = await Payment.create({

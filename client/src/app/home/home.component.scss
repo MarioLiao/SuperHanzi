@@ -3,7 +3,7 @@
   height: 100%;
   background-color: #362e2a; /* Solid color for the content side */
   color: wheat;
-  font-size: 1.8vw;
+  font-size: 1.5vw;
   background-size: contain;
   width: 100%;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
@@ -31,11 +31,6 @@
   z-index: 10;
 }
 
-.buttons {
-  background-color: transparent;
-  color: white;
-}
-
 .picture {
   background-color: transparent;
   width: 90%;
@@ -56,6 +51,9 @@
 .button {
   color: wheat;
   cursor: pointer;
+  transition:
+    color 0.4s ease,
+    text-decoration 0.4s ease;
 }
 
 .button:hover {
@@ -114,12 +112,6 @@
   justify-content: center;
   align-items: center;
   z-index: 14;
-}
-
-.web-name {
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 
 .special-button:active {

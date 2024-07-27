@@ -7,6 +7,7 @@ import { LearningComponent } from './learning/learning.component';
 import { PracticeComponent } from './practice/practice.component';
 import { GameComponent } from './game/game.component';
 import { CharacterSelectionComponent } from './character-selection/character-selection.component';
+import { PaymentResultComponent } from './payment-result/payment-result.component';
 import { CreditsComponent } from './credits/credits.component';
 import { authGuard } from './guards/auth.guard';
 
@@ -44,6 +45,11 @@ export const routes: Routes = [
     canActivate: [authGuard],
   },
   { path: 'credits', component: CreditsComponent },
+  {
+    path: 'after-payment/:status',
+    component: PaymentResultComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({

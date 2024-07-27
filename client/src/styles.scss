@@ -10,9 +10,11 @@ body {
 }
 
 .web-name {
-  position: relative;
-  top: 0;
+  position: absolute;
+  top: 3vh;
   left: 0;
+  font-family: "mgs4brush", serif;
+  font-size: 4vw;
 }
 
 .flex-row {
@@ -37,6 +39,13 @@ body {
   border-top: #e9c798 2px solid;
   color: black;
   cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+
+  &:hover {
+    background-color: #d69d4d;
+  }
 }
 
 .special-button:active {
@@ -54,4 +63,19 @@ body {
 
 .chinese {
   font-family: "KaiTi", serif;
+}
+
+@font-face {
+  font-family: "mgs4brush";
+  src: url("./fonts/mgs4brush.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.unselectable {
+  user-select: none;
+}
+
+.default-font {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

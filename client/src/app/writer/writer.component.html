@@ -1,8 +1,8 @@
 <div class="container">
   <div class="col-6 section-one flex-column">
-    <div class="web-name">WEBAPPLOGO</div>
+    <div class="web-name">SuperHanZi</div>
 
-    <div class="button-section flex-row" *ngIf="practice">
+    <div class="button-section flex-row unselectable" *ngIf="practice">
       <div class="toggle-container flex-row">
         <div class="button-label">Show outline</div>
         <input
@@ -36,20 +36,46 @@
 
     <div class="feedback-section">
       <div class="feedback" *ngIf="learning">{{ learnInstructions }}</div>
-      <div class="feedback feedback-practice" *ngIf="practice">
-        <div class="practice-item">{{ practiceInstructions }}</div>
-        <div>
-          <div class="practice-item">{{ feedbackCurrentStroke }}</div>
-          <div class="practice-item">{{ feedbackStrokeMistakes }}</div>
-          <div class="practice-item">{{ feedbackStrokesRemaining }}</div>
-          <div class="practice-item">{{ feedbackTotalMistakes }}</div>
+      <div
+        class="stats-box"
+        *ngIf="practice"
+        [style.background-color]="this.color"
+      >
+        <div class="practice-instruction" *ngIf="!this.practiceButtonHidden">
+          {{ practiceInstructions }}
+        </div>
+        <div class="stats-container" *ngIf="this.practiceButtonHidden">
+          <div class="practice-item">
+            <div class="stats-header">Current Stroke:</div>
+            <div class="stats-value">
+              {{ feedbackCurrentStroke }}
+            </div>
+          </div>
+          <div class="practice-item">
+            <div class="stats-header">Mistake on Current Stroke:</div>
+            <div class="stats-value">
+              {{ feedbackStrokeMistakes }}
+            </div>
+          </div>
+          <div class="practice-item">
+            <div class="stats-header">Stroke Remaining:</div>
+            <div class="stats-value">
+              {{ feedbackStrokesRemaining }}
+            </div>
+          </div>
+          <div class="practice-item">
+            <div class="stats-header">Total Mistakes:</div>
+            <div class="stats-value">
+              {{ feedbackTotalMistakes }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="flex-column col-6 section-two">
-    <div class="home-button" (click)="navigateToHome()">Home</div>
+  <div class="flex-column col-6 section-two unselectable">
+    <div class="home-button" (click)="navigateToCharacterSelection()">Back</div>
     <div class="whiteboard">
       <div id="character-writer"></div>
       <div *ngIf="learning">

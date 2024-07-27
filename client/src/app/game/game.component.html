@@ -1,7 +1,7 @@
 <div class="container">
   <div class="flex-column col-6 section-two" *ngIf="matchFound">
     <div class="section-c">
-      <div class="web-name">WEBAPPLOGO</div>
+      <div class="web-name">SuperHanZi</div>
       <div *ngIf="isGameStarted" class="timer-container">
         <div class="timer-title">Timer:</div>
         <div class="timer-bar-container">
@@ -12,11 +12,13 @@
     <div class="section-a">
       <div class="opponent-whiteboard">
         <div class="playerTitle">Opponent</div>
-        <div id="player1-writer"></div>
+        <div id="player1-writer" class="player1-writer"></div>
       </div>
       <div class="character-section flex-column">
         <div class="character chinese">{{ character.character }}</div>
-        <div class="pinyin">{{ character.pinyin }}/{{ character.english }}</div>
+        <div class="pinyin">
+          {{ character.pinyin }} / {{ character.english }}
+        </div>
       </div>
     </div>
 
@@ -46,7 +48,7 @@
   </div>
 
   <div
-    class="waiting-opponent"
+    class="waiting-opponent animate"
     *ngIf="!matchFound && !showOpponent && !opponentQuit"
   >
     Searching for Opponent...

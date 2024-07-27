@@ -29,7 +29,7 @@
   height: 100%;
   background-color: #362e2a;
   color: white;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 .wallpaper {
@@ -126,6 +126,14 @@
   text-align: center;
   display: inline-block;
   line-height: normal;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
+
+  &:active {
+    background-color: #eeeeee8f;
+  }
 }
 
 .redirect {
@@ -137,7 +145,6 @@
 .form-title {
   text-align: center;
   font-size: 25px;
-  text-decoration: underline;
   text-decoration-color: wheat;
 }
 
@@ -146,6 +153,8 @@
   font-size: 30px;
   color: white;
   margin-bottom: 20px;
+  position: relative;
+  font-size: 5vw;
 }
 
 //google button design from https://codepen.io/mupkoo/pen/YgddgB

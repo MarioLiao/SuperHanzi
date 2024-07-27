@@ -21,6 +21,9 @@ export class WriterComponent {
   pinyin: string = '';
   english: string = '';
   currentStroke: number = 0;
+  public viewWidth: number = window.innerWidth;
+  public viewHeight: number = window.innerHeight;
+  public color: string = 'rgb(253, 253, 253, 0.8)';
 
   @Input() showOutline!: boolean;
   @Input() strokeHintHidden: boolean = true;
@@ -62,8 +65,8 @@ export class WriterComponent {
   createCharacter(leniency: number) {
     // Create the character using thrid party API HanziWriter
     this.writer = HanziWriter.create('character-writer', this.hanzi, {
-      width: 500,
-      height: 500,
+      width: this.viewWidth * 0.5 * 0.8,
+      height: this.viewHeight * 0.87 * 0.85,
       padding: 5,
       showCharacter: false,
       showOutline: this.showOutline,
@@ -74,8 +77,13 @@ export class WriterComponent {
     });
   }
 
-  navigateToHome() {
-    this.router.navigate(['/home']);
+  navigateToCharacterSelection() {
+    // this.router.navigate(['/character-selection/learning']);
+    if (this.router.url === '/learning') {
+      this.router.navigate(['/character-selection/learning']);
+    } else {
+      this.router.navigate(['/character-selection/practice']);
+    }
   }
 
   learnCharacter() {
@@ -147,6 +155,7 @@ export class WriterComponent {
     // Practice version for quizing
     this.practiceButtonHidden = true;
     this.difficultyButtonHidden = true;
+    this.color = 'transparent';
     // Get the difficulty value and then create character with it
     this.createCharacter(this.getLeniency());
     this.practiceQuiz();
@@ -160,31 +169,31 @@ export class WriterComponent {
 
   practiceQuiz() {
     this.practiceInstructions = 'Practice Statistics:';
-    this.feedbackCurrentStroke = 'Current Stroke #: 1';
-    this.feedbackStrokeMistakes = 'Mistakes on Current Stroke: 0';
+    this.feedbackCurrentStroke = '1';
+    this.feedbackStrokeMistakes = '0';
     HanziWriter.loadCharacterData(this.hanzi).then((charData: any) => {
-      this.feedbackStrokesRemaining = `Strokes Remaining: ${charData.strokes.length}`;
+      this.feedbackStrokesRemaining = `${charData.strokes.length}`;
     });
-    this.feedbackTotalMistakes = 'Total Mistakes: 0';
+    this.feedbackTotalMistakes = '0';
     this.writer.quiz({
       onMistake: (strokeData) => {
         if (strokeData.mistakesOnStroke >= 3) {
           this.strokeHintHidden = false;
           this.currentStroke = strokeData.strokeNum;
         }
-        this.feedbackStrokeMistakes = `Mistakes on Current Stroke: ${strokeData.mistakesOnStroke}`;
-        this.feedbackTotalMistakes = `Total Mistakes: ${strokeData.totalMistakes}`;
+        this.feedbackStrokeMistakes = `${strokeData.mistakesOnStroke}`;
+        this.feedbackTotalMistakes = `${strokeData.totalMistakes}`;
       },
       onCorrectStroke: (strokeData) => {
         this.strokeHintHidden = true;
         if (strokeData.strokesRemaining > 0) {
-          this.feedbackCurrentStroke = `Current Stroke #: ${strokeData.strokeNum + 2}`;
+          this.feedbackCurrentStroke = `${strokeData.strokeNum + 2}`;
         }
-        this.feedbackStrokesRemaining = `Strokes Remaining: ${strokeData.strokesRemaining}`;
-        this.feedbackStrokeMistakes = `Mistakes on Current Stroke: 0`;
+        this.feedbackStrokesRemaining = `${strokeData.strokesRemaining}`;
+        this.feedbackStrokeMistakes = `0`;
       },
       onComplete: () => {
-        this.feedbackCurrentStroke = `Current Stroke #: Finished`;
+        this.feedbackCurrentStroke = `Finished`;
         this.practiceAgainButtonHidden = false;
       },
     });

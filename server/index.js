@@ -79,6 +79,12 @@ io.on('connection', (socket) => {
       socket.emit('joinedRoom', { roomId: roomId });
     } else {
       roomId = Object.keys(rooms)[0];
+      if (roomId === data.userId) {
+        io.socketsLeave(roomId);
+        socket.join(roomId);
+        socket.emit('joinedRoom', { roomId: roomId });
+        return;
+      }
       delete rooms[roomId];
       socket.join(roomId);
       socket.emit('joinedRoom', { roomId: roomId });
@@ -103,10 +109,6 @@ io.on('connection', (socket) => {
       signal: data.signal,
       time: data.time,
     });
-  });
-
-  socket.on('disconnect', () => {
-    //handle logic when a client disconnects
   });
 
   socket.on('startGame', (data) => {

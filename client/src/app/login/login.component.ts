@@ -81,6 +81,8 @@ export class LoginComponent {
           this.isLoading = false;
         },
       });
+    } else {
+      alert('Login Failed: Ensure all fields are filled out');
     }
   }
 
@@ -107,7 +109,12 @@ export class LoginComponent {
         });
       } else {
         this.registerError = 'Passwords do not match';
+        alert('Sign-up Failed: Passwords do not match');
       }
+    } else {
+      alert(
+        'Sign-up Failed: Ensure email is valid and password is at least 6 characters long',
+      );
     }
   }
 

@@ -1,0 +1,60 @@
+.backdrop {
+  color: wheat;
+  background-image: url(../../assets/login-wallpaper.jpg);
+  background-size: cover;
+
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wallpaper {
+  height: 70%;
+  aspect-ratio: 1;
+  border-radius: 20vw;
+  background-color: #362e2a;
+  filter: drop-shadow(-10px 10px 5px rgba(0, 0, 0, 0.7));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  position: relative;
+  margin-bottom: 10vh;
+}
+
+.message {
+  position: relative;
+  margin-bottom: 5vh;
+  font-size: 1.5vw;
+}
+
+.button {
+  position: relative;
+  padding: 1vh 2vw;
+  border-radius: 50px;
+  color: black;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.3s;
+  background-size: cover;
+  width: 1vw;
+  aspect-ratio: 1;
+  -webkit-mask: url(../../assets/home-button.png) center/contain;
+  mask: url(../../assets/home-button.png) no-repeat center center / contain;
+
+  background-color: #dfb06e;
+
+  &:hover {
+    background-color: #d69d4d;
+  }
+
+  &:active {
+    transform: scale(0.9);
+  }
+}

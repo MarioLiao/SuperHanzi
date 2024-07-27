@@ -66,6 +66,7 @@ export class GameComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log('game component INIT');
     const navData = window.history.state;
     this.userInfo = navData.userInfo;
 
@@ -137,6 +138,7 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    console.log('destroying game');
     this.socket.leaveRoom({ roomId: this.gameRoom });
     this.socket.closeSocket();
   }
@@ -173,8 +175,8 @@ export class GameComponent implements OnInit, OnDestroy {
         'player2-writer',
         this.character.character,
         {
-          width: 500,
-          height: 500,
+          width: window.innerWidth * 0.5 * 0.8,
+          height: window.innerHeight * 0.87 * 0.85,
           padding: 5,
           showCharacter: false,
           showOutline: this.showOutline,
@@ -188,8 +190,8 @@ export class GameComponent implements OnInit, OnDestroy {
         'player2-writer',
         this.character.character,
         {
-          width: 500,
-          height: 500,
+          width: window.innerWidth * 0.5 * 0.8,
+          height: window.innerHeight * 0.87 * 0.85,
           padding: 5,
           showCharacter: false,
           showOutline: this.showOutline,
@@ -218,9 +220,11 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   renderFanningStrokes(target: any, strokes: any) {
+    let width = window.innerWidth * 0.5 * 0.35;
+    let height = window.innerHeight * 0.4 * 0.75;
     let svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.style.width = '200';
-    svg.style.height = '200';
+    svg.style.width = `${width}px`;
+    svg.style.height = `${height}px`;
     svg.style.marginRight = '3px';
     while (target.firstChild) {
       target.removeChild(target.firstChild);
@@ -228,7 +232,7 @@ export class GameComponent implements OnInit, OnDestroy {
     target.appendChild(svg);
     let group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
 
-    let transformData = HanziWriter.getScalingTransform(200, 200);
+    let transformData = HanziWriter.getScalingTransform(width, height);
     group.setAttributeNS(null, 'transform', transformData.transform);
     svg.appendChild(group);
 
@@ -332,5 +336,10 @@ export class GameComponent implements OnInit, OnDestroy {
     } else {
       this.player2Result = 'Victory';
     }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeunloadHandler(event: any) {
+    this.ngOnDestroy();
   }
 }
