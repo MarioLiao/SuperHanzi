@@ -79,7 +79,7 @@
         <div class="gameResults">Total Score</div>
         <div class="gameResults">{{ player2Score }} vs {{ player1Score }}</div>
       </div>
-      <div *ngIf="!isGameStarted">
+      <div *ngIf="!isGameStarted" class="control-button-container">
         <select
           class="general-button general-button-dropdown"
           [(ngModel)]="timer"

@@ -68,7 +68,6 @@ export class LoginComponent {
       const apiUrl = this.envService.get('API_URL');
       this.http.post(`${apiUrl}/login`, { email, password }).subscribe({
         next: (response: any) => {
-          console.log('Login successful', response);
           localStorage.setItem('token', response.token);
           this.router.navigate(['/home']);
         },
@@ -95,7 +94,6 @@ export class LoginComponent {
         const apiUrl = this.envService.get('API_URL');
         this.http.post(`${apiUrl}/signup`, { email, password }).subscribe({
           next: (response: any) => {
-            console.log('Registration successful', response);
             localStorage.setItem('token', response.token);
             this.router.navigate(['/home']);
           },

@@ -101,12 +101,10 @@ export class GameComponent implements OnInit, OnDestroy {
 
     // emit signal to create room
     this.socket.findMatch({ userId: this.userInfo.id });
-    console.log('finding match');
 
     // triggered when you join a room
     this.socket.onJoinedRoom((data) => {
       this.gameRoom = data.roomId;
-      console.log('joined room: ', data.roomId);
     });
 
     this.socket.onSignal((data) => {

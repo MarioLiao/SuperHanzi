@@ -46,8 +46,6 @@ export class WebsocketService {
   }
 
   public onStartGame(callback: (data: any) => void) {
-    console.log('received start game signal');
-
     this.webSocket.once('startGame', callback);
   }
 

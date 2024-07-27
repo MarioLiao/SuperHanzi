@@ -375,8 +375,8 @@ input:checked + .toggle-label::before {
 }
 
 .web-name {
+  font-size: 3vw;
   position: relative;
-  margin-bottom: 6vh;
 }
 
 @keyframes loopAnimation {
@@ -393,4 +393,11 @@ input:checked + .toggle-label::before {
 
 .animate {
   animation: loopAnimation 2s infinite;
+}
+
+.control-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 }

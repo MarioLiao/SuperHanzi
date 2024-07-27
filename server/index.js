@@ -98,12 +98,10 @@ io.on('connection', (socket) => {
         character: randomCharacter,
       });
     }
-    console.log(`${data.userId} joined room: `, roomId);
   });
 
   socket.on('sendSignal', (data) => {
     //data contain signal info (maybe how many words left)
-    console.log(data);
     io.to(data.roomId).emit('signal', {
       userId: data.user,
       signal: data.signal,
@@ -123,14 +121,10 @@ io.on('connection', (socket) => {
   });
 
   socket.on('leaveRoom', (data) => {
-    console.log('leaving');
     socket.leave(data.roomId);
     io.to(data.roomId).emit('destroyRoom', { roomId: data.roomId });
-    console.log(rooms);
-    console.log(data.roomId);
 
     delete rooms[data.roomId];
-    console.log(rooms);
   });
 }); //handle logic when a client connects to the web socket (when finding a match)
 
