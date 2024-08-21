@@ -47,9 +47,9 @@ Learning new character:
 
 Practing character:
 
-![error loading](screenshots/practcing1.png)
+![error loading](screenshots/practicing1.png)
 
-![error loading](screenshots/practcing2.png)
+![error loading](screenshots/practicing1.png)
 
 Finding game and game options setup:
 
