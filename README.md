@@ -49,7 +49,7 @@ Practing character:
 
 ![error loading](screenshots/practicing1.png)
 
-![error loading](screenshots/practicing1.png)
+![error loading](screenshots/practicing2.png)
 
 Finding game and game options setup:
 
