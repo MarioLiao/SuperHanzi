@@ -1,10 +1,5 @@
 ## SuperHanZi
 
-### URL
-
-website url: https://stressfulapi.re-v7.tech  
-video url: https://youtu.be/Df_fSgpUye0
-
 ### Team members
 
 frans.budiman@mail.utoronto.ca  
@@ -13,9 +8,9 @@ pantysh.ghurburrun@mail.utoronto.ca
 
 ### Description
 
-The proposal of our web application is to create a Chinese writing app, where new Chinese learners can learn how to write the Chinese characters. Our app will be deployed via mobile, allowing the user to easily write with their fingers. When the user is practising or learning a Chinese character, our app will give the user feedback, to whether or not they have done the correct stroke order, the generally correct stroke, and the position of the start of the stroke. Along with users being able to “learn” and “review” Chinese characters, we will have an additional feature when users can play a game. This game will be a 1 vs 1 game, where the app will score the users based on their speed of writing and how correct their writing is.
+The proposal of our web application is to create a Chinese writing app, where new Chinese learners can learn how to write the Chinese characters. When the user is practcing or learning a Chinese character, our app will give the user feedback, to whether or not they have done the correct stroke order, the generally correct stroke, and the position of the start of the stroke. Along with users being able to “learn” and “review” Chinese characters, we will have an additional feature where users can play a game. This game will be a 1 vs 1 game, where the app will score the users based on their speed of, the amount of mistakes they made, and how many strokes they can finish within the allotted time.
 
-### Required Elements
+### Tech Stack
 
 - Frontend: Angular
 - Backend: Express
@@ -23,41 +18,51 @@ The proposal of our web application is to create a Chinese writing app, where ne
 - Third-party API:
   - https://hanziwriter.org/docs.html
 - OAuth 2.0 for user auth/sign-in using social media accounts
+- Stripe for payment and its webhook to notify our server
+- Real time game created using websockets to establish 2-way communication
 
-### Additional Requirements
+### Video Demo
 
-#### Webhook
+https://youtu.be/Df_fSgpUye0
 
-- Use stripe for payment and its webhook to notify our server
-  - Send a webhook to our server when a payment is successful
-  - Send a webhook to our server when a payment is unsuccessful
-  - etc
+### Screenshots
 
-#### Real-time Features
+Sign in/sign up:
 
-- Users can compete with other users online to see who can write the characters of a sentence the fastest.
-- Use web sockets to establish a 2-way communication that way users can see the progress of their “opponent”.
-- Characters are streamed in real time, and the opponent is notified immediately upon completion of each character.
+![error loading](screenshots/signIn.png)
 
-### Alpha Milestones
+![error loading](screenshots/signUp.png)
 
-- Frontend/backend setup
-- User auth setup with OAuth 2.0
-- Basic UI implementation
-- Start implementing 2-way communication using web sockets
-- Implement the Chinese alphabet and their images/stroke order images into our app
-- Research and implement stroke order and handwriting detection
+Home page:
 
-### Beta Milestones
+![error loading](screenshots/homePage.png)
 
-- Deployment with public URL
-- Combine the stroke order and handwriting detection with the Chinese alphabet
-- Implement feedback mechanism for character writing
+Character selection page (first page):
 
-### Final Milestones
+![error loading](screenshots/characterSelection.png)
 
-- Full implementation of all features
-  - Detailed feedback for stroke order, correctness, and starting position
-  - 1V1 gamemode with a scoring system based on speed and accuracy
-  - etc
-- Final Deployment
+Learning new character:
+
+![error loading](screenshots/learning.png)
+
+Practing character:
+
+![error loading](screenshots/practcing1.png)
+
+![error loading](screenshots/practcing2.png)
+
+Finding game and game options setup:
+
+![error loading](screenshots/findingMatch.png)
+
+![error loading](screenshots/game1.png)
+
+Playing game and scoring:
+
+![error loading](screenshots/game2.png)
+
+![error loading](screenshots/game3.png)
+
+![error loading](screenshots/game4.png)
+
+![error loading](screenshots/game5.png)
